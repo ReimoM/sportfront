@@ -1,20 +1,26 @@
 <template>
   <div id="app">
     <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/home">Pealeht</router-link> |
+      <router-link to="/fields">Vaata väljakuid</router-link> |
+      <router-link to="/booking">Broneeri väljak</router-link> |
+      <router-link to="/login">Sisselogimine</router-link> |
+      <router-link to="/user">Kasutaja</router-link>
     </nav>
     <router-view/>
   </div>
 </template>
 
 <style>
+
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #07080a;
+/*  teksti värv*/
 }
 
 nav {
@@ -23,10 +29,12 @@ nav {
 
 nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: #0ecb24;
+/*  Käsurea värv*/
 }
 
 nav a.router-link-exact-active {
-  color: #42b983;
+  color: #cb0f0f;
+/*  aktiveeritud akna värk*/
 }
 </style>
