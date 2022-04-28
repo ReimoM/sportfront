@@ -1,11 +1,11 @@
 <template>
-  <div id="app" >
-    <nav>
-      <router-link to="/home">Pealeht</router-link> |
-      <router-link to="/fields">Vaata väljakuid</router-link> |
-      <router-link to="/booking">Broneeri väljak</router-link> |
-      <router-link to="/login">Sisselogimine</router-link> |
-      <router-link to="/user">Kasutaja</router-link>
+  <div  id="app"  >
+    <nav >
+      <button @click="$router.push('home')" class="btn btn-outline-primary" >Pealeht</button> |
+      <button @click="$router.push('fields')" class="btn btn-outline-primary" >Vaata väljakuid</button> |
+      <button @click="$router.push('booking')" class="btn btn-outline-primary" >Broneeri väljak</button> |
+      <button @click="$router.push('login')" class="btn btn-outline-primary" >Sisselogimine</button> |
+      <button @click="$router.push('user')" class="btn btn-outline-primary" >Kasutaja</button>
     </nav>
     <router-view/>
   </div>
@@ -40,5 +40,18 @@ nav a {
 nav a.router-link-exact-active {
   color: #f80000;
 /*  aktiveeritud akna värk*/
+}
+
+/*nav li:hover,*/
+/*nav li:active {*/
+/*  background-color: #cb0f0f;*/
+/*  cursor: pointer;*/
+/*}*/
+
+nav li:hover,
+nav li.router-link-active,
+nav li.router-link-exact-active {
+  background-color: indianred;
+  cursor: pointer;
 }
 </style>
