@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" >
     <nav>
       <router-link to="/home">Pealeht</router-link> |
       <router-link to="/fields">Vaata väljakuid</router-link> |
@@ -12,7 +12,11 @@
 </template>
 
 <style>
-
+body {
+  background-image: url("https://images.pexels.com/photos/4498577/pexels-photo-4498577.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+  background-repeat: no-repeat;
+  background-size: 2000px;
+}
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -29,12 +33,12 @@ nav {
 
 nav a {
   font-weight: bold;
-  color: #0ecb24;
+  color: #151508;
 /*  Käsurea värv*/
 }
 
 nav a.router-link-exact-active {
-  color: #cb0f0f;
+  color: #f80000;
 /*  aktiveeritud akna värk*/
 }
 </style>
