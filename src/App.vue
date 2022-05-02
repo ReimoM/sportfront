@@ -1,10 +1,11 @@
 <template>
   <div  id="app"  >
-    <nav >
-      <button @click="$router.push('home')" class="btn btn-outline-primary" >Pealeht</button> |
-      <button @click="$router.push('fields')" class="btn btn-outline-primary" >Vaata väljakuid</button> |
-      <button @click="$router.push('booking')" class="btn btn-outline-primary" >Broneeri väljak</button> |
-      <button @click="$router.push('login')" class="btn btn-outline-primary" >Sisselogimine</button> |
+
+    <nav class="btn-group "  role="group" aria-label="Toolbar with button group">
+      <button @click="$router.push('home')" class="btn btn-outline-primary" >Pealeht</button>
+      <button @click="$router.push('fields')" class="btn btn-outline-primary" >Vaata väljakuid</button>
+      <button @click="$router.push('booking')" class="btn btn-outline-primary" >Broneeri väljak</button>
+      <button @click="$router.push('login')" class="btn btn-outline-primary" >Sisselogimine</button>
       <button @click="$router.push('user')" class="btn btn-outline-primary" >Kasutaja</button>
     </nav>
     <router-view/>
@@ -12,11 +13,6 @@
 </template>
 
 <style>
-body {
-  background-image: url("https://images.pexels.com/photos/4498577/pexels-photo-4498577.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
-  background-repeat: no-repeat;
-  background-size: 2000px;
-}
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

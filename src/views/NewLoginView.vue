@@ -9,7 +9,7 @@
     <input type="text" placeholder="parool" v-model="password">
     <br>
     <br>
-    <button v-on:click="saveDataToSessionStorage" type="button" class="btn btn-success m-3">Logi sisse</button>
+    <button v-on:click="saveDataToSessionStorage" type="button" class="btn btn-outline-success">Logi sisse</button>
   </div>
 </template>
 
