@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div >
     <h1>Siia tuleb väljaku broneerimine</h1>
     <form>
       <div class="form-row align-items-center">
@@ -7,7 +7,7 @@
           <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
           <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
             <option selected>Vali spordiväljak</option>
-            <option value="1" >One</option>
+            <option value="1">One</option>
             <option value="2">Two</option>
             <option value="3">Three</option>
           </select>
@@ -15,10 +15,31 @@
         <div class="col-auto my-1">
           <button type="submit" class="btn btn-outline-primary">Kinnita väljak</button>
         </div>
-
+      </div>
+    </form>
+    <br>
+    <form>
+      <div class="form-row align-items-center">
         <div class="col-3 my-1">
           <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
-          <select class="custom-select mr-sm-2">
+          <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+            <option selected>Vali spordiala</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
+        </div>
+        <div class="col-auto my-1">
+          <button type="submit" class="btn btn-outline-primary">Kinnita sport</button>
+        </div>
+      </div>
+    </form>
+    <br>
+    <form>
+      <div class="form-row align-items-center">
+        <div class="col-3 my-1">
+          <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
+          <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
             <option selected>Vali kuupäev</option>
             <option value="1">One</option>
             <option value="2">Two</option>
@@ -28,8 +49,11 @@
         <div class="col-auto my-1">
           <button type="submit" class="btn btn-outline-primary">Kinnita kuupäev</button>
         </div>
-        <br>
-        <br>
+      </div>
+    </form>
+    <br>
+    <form>
+      <div class="form-row align-items-center">
         <div class="col-3 my-1">
           <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
           <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
@@ -44,16 +68,20 @@
         </div>
       </div>
     </form>
-
   </div>
 </template>
 
 <script>
 export default {
-  name: "NewBookingView"
+  name: "NewBookingView",
+  data: function () {
+    return {}
+
+  }
 }
 </script>
 
-<style scoped>
+<style scoped >
+
 
 </style>

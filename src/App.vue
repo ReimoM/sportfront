@@ -1,7 +1,7 @@
 <template>
-  <div  id="app"  >
+  <div id="app" >
 
-    <nav class="btn-group "  role="group" aria-label="Toolbar with button group">
+    <nav class="btn-group" role="group" aria-label="Toolbar with button group">
       <button @click="$router.push('home')" class="btn btn-outline-primary" >Pealeht</button>
       <button @click="$router.push('fields')" class="btn btn-outline-primary" >Vaata väljakuid</button>
       <button @click="$router.push('booking')" class="btn btn-outline-primary" >Broneeri väljak</button>
@@ -38,16 +38,5 @@ nav a.router-link-exact-active {
 /*  aktiveeritud akna värk*/
 }
 
-/*nav li:hover,*/
-/*nav li:active {*/
-/*  background-color: #cb0f0f;*/
-/*  cursor: pointer;*/
-/*}*/
 
-nav li:hover,
-nav li.router-link-active,
-nav li.router-link-exact-active {
-  background-color: indianred;
-  cursor: pointer;
-}
 </style>
