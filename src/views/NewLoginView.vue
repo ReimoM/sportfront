@@ -12,7 +12,7 @@
           <div class="form-group">
             <input type="password" class="form-control" placeholder="Parool">
           </div>
-          <button v-on:click="$router.push('home')" type="submit" class="btn btn-success">Logi sisse</button>
+          <button v-on:click="$router.push('user')" type="submit" class="btn btn-success">Logi sisse</button>
           <br>
           <br>
         </form>
@@ -44,7 +44,7 @@
             <div class="form-group">
               <input type="password" v-model="password" class="form-control" placeholder="Parool">
             </div>
-            <button v-on:click="$router.push('home'); addNewUser" type="submit" class="btn btn-success">Loo kasutaja</button>
+            <button v-on:click="$router.push('user'); addNewUser" type="submit" class="btn btn-success">Loo kasutaja</button>
             <br>
             <br>
           </form>
