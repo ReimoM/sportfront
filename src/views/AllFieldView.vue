@@ -25,11 +25,7 @@
         </tr>
         </tbody>
       </table>
-
-
     </div>
-
-
   </div>
 </template>
 
@@ -38,12 +34,13 @@ export default {
   name: "AllFieldView",
   data: function () {
     return {
-      fieldId: 0,
-      field: {},
-      fields: {},
+      id: 0,
+      locationCounty: this.locationCounty,
+      name: this.name,
+      fields: this.fields,
+      locationId: this.locationId,
 
     }
-
   },
   methods : {
     getAllSportFields: function () {

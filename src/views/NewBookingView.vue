@@ -1,9 +1,9 @@
 <template>
   <div >
     <h1>Siia tuleb väljaku broneerimine</h1>
-    <form>
-      <div class="form-row align-items-center">
-        <div class="col-3 my-1">
+    <form >
+      <div class="form-row align-items-centre">
+        <div class="col-3 my-1 offset-md-4">
           <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
           <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
             <option selected>Vali spordiväljak</option>
@@ -20,7 +20,7 @@
     <br>
     <form>
       <div class="form-row align-items-center">
-        <div class="col-3 my-1">
+        <div class="col-3 my-1 offset-md-4">
           <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
           <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
             <option selected>Vali spordiala</option>
@@ -37,7 +37,7 @@
     <br>
     <form>
       <div class="form-row align-items-center">
-        <div class="col-3 my-1">
+        <div class="col-3 my-1 offset-md-4">
           <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
           <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
             <option selected>Vali kuupäev</option>
@@ -54,7 +54,7 @@
     <br>
     <form>
       <div class="form-row align-items-center">
-        <div class="col-3 my-1">
+        <div class="col-3 my-1 offset-md-4">
           <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
           <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
             <option selected>Vali kellaaeg</option>
@@ -68,6 +68,9 @@
         </div>
       </div>
     </form>
+    <br>
+    <br>
+    <button type="submit" class="btn btn-success">Kinnita broneering</button>
   </div>
 </template>
 

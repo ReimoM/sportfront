@@ -10,7 +10,23 @@
 
 <script>
 export default {
-  name: "UserView"
+  name: "UserView",
+  data: function () {
+    return {
+
+    }
+
+  },
+  methods: {
+    someMethodName: function () {
+      this.$http.get("/some/path")
+          .then(response => {
+            console.log(response.data)
+          }).catch(error => {
+        console.log(error)
+      })
+    }
+  }
 }
 </script>
 
