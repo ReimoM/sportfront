@@ -1,12 +1,12 @@
 <template>
-  <div >
+  <div>
     <h3>Sisselogimiseks täida väljad</h3>
     <br>
 
     <div class="col-md-3 col-sm-12 mx-auto">
       <div v-if="tableDivDisplay" class="login-form">
         <form>
-          <div  class="form-group">
+          <div class="form-group">
             <input type="text" class="form-control" placeholder="Kasutajanimi">
           </div>
           <div class="form-group">
@@ -16,33 +16,33 @@
           <br>
           <br>
         </form>
-          <label>Kasutaja puudub?</label>
-          <br>
-          <button type="button" class="btn btn-primary" v-on:click="hideTableDiv">Loo kasutaja</button>
+        <label>Kasutaja puudub?</label>
+        <br>
+        <button type="button" class="btn btn-primary" v-on:click="hideTableDiv">Loo kasutaja</button>
 
-        </div>
+      </div>
       <br>
 
       <div>
         <div v-if="newUserDisplay" class="login-form">
           <form>
-            <div  class="form-group">
-              <input type="text" v-model= "contactFirstName"class="form-control" placeholder="Eesnimi">
+            <div class="form-group">
+              <input type="text" v-model="newUserInfo.contactFirstName" class="form-control" placeholder="Eesnimi">
             </div>
             <div class="form-group">
-              <input type="text" v-model="contactLastName" class="form-control" placeholder="Perekonnanimi">
+              <input type="text" v-model="newUserInfo.contactLastName" class="form-control" placeholder="Perekonnanimi">
             </div>
             <div class="form-group">
-              <input type="text" v-model="contactTelephone" class="form-control" placeholder="Telefon">
+              <input type="text" v-model="newUserInfo.contactTelephone" class="form-control" placeholder="Telefon">
             </div>
             <div class="form-group">
-              <input type="text" v-model="contactEmail" class="form-control" placeholder="E-mail">
+              <input type="text" v-model="newUserInfo.contactEmail" class="form-control" placeholder="E-mail">
             </div>
             <div class="form-group">
-              <input type="text" v-model="username" class="form-control" placeholder="Kasutajanimi">
+              <input type="text" v-model="newUserInfo.username" class="form-control" placeholder="Kasutajanimi">
             </div>
             <div class="form-group">
-              <input type="password" v-model="password" class="form-control" placeholder="Parool">
+              <input type="password" v-model="newUserInfo.password" class="form-control" placeholder="Parool">
             </div>
             <button v-on:click="addNewUser" type="submit" class="btn btn-success">Loo kasutaja</button>
             <br>
@@ -64,12 +64,9 @@ export default {
     return {
       tableDivDisplay: true,
       newUserDisplay: false,
-      contactFirstName: '',
-      contactLastName: '',
-      contactTelephone: '',
-      contactEmail: '',
-      username: '',
-      password:''
+      newUserInfo: {},
+      messageTitle: '',
+      messageDescription: ''
 
     }
   },
@@ -103,28 +100,23 @@ export default {
     // },
 
     addNewUser: function () {
-      let newUserInfo = {
-        contactFirstName: this.contactFirstName,
-        contactLastName: this.contactLastName,
-        contactTelephone: this.contactTelephone,
-        contactEmail: this.contactEmail,
-        username: this.username,
-        password: this.password
+
+      if (this.newUserInfo.contactFirstName.length = 0) {
+        this.messageTitle = "Eesnimi on kohustuslik väli"
       }
 
-      this.$http.post("/user/add", newUserInfo
+
+      this.$http.post("/user/add", this.newUserInfo
       ).then(response => {
-        this.contactFirstName= response.data.contactFirstName
-        this.contactLastName = response.data.contactLastName
-        this.contactTelephone= response.data.contactTelephone
-        this.contactEmail= response.data.contactEmail
-        this.username = response.data.username
-        this.password = response.data.password
-        this.saveDataToSessionStorage()
-        console.log(response.data)
+
+        // sessionStorage.setItem('userId', response.data.userId)
+        // push tu user home view
+
+        console.log(response.status)
       }).catch(error => {
+        // kuva veateadet kui username on kasutusel
         console.log(error)
-      })
+      });
     },
 
 
