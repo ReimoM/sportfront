@@ -3,6 +3,9 @@
     <h3>Sisselogimiseks täida väljad</h3>
     <br>
 
+    <div v-if="successMessage.length > 0"class="alert alert-primary" role="alert">
+      {{successMessage}}
+    </div>
     <div class="col-md-3 col-sm-12 mx-auto">
       <div v-if="tableDivDisplay" class="login-form">
         <form>
@@ -66,7 +69,8 @@ export default {
       newUserDisplay: false,
       newUserInfo: {},
       messageTitle: '',
-      messageDescription: ''
+      messageDescription: '',
+      successMessage: ''
 
     }
   },
@@ -101,22 +105,24 @@ export default {
 
     addNewUser: function () {
 
-      if (this.newUserInfo.contactFirstName.length = 0) {
+      if (this.newUserInfo.contactFirstName.length === 0) {
         this.messageTitle = "Eesnimi on kohustuslik väli"
       }
 
 
       this.$http.post("/user/add", this.newUserInfo
       ).then(response => {
-
+        this.successMessage= 'Uus kasutaja lisatud, kasutjanimi: '+this.newUserInfo.username
+        // alert(this.successMessage)
         // sessionStorage.setItem('userId', response.data.userId)
         // push tu user home view
 
-        console.log(response.status)
-      }).catch(error => {
-        // kuva veateadet kui username on kasutusel
-        console.log(error)
-      });
+        // console.log(alert(response.data))
+      }).catch(error =>alert(error.response.data.title))
+      // {
+        // alert(error.response)
+        // // kuva veateadet kui username on kasutusel
+      // });
     },
 
 
