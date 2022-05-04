@@ -44,7 +44,7 @@
             <div class="form-group">
               <input type="password" v-model="password" class="form-control" placeholder="Parool">
             </div>
-            <button v-on:click="$router.push('user'); addNewUser" type="submit" class="btn btn-success">Loo kasutaja</button>
+            <button v-on:click="addNewUser" type="submit" class="btn btn-success">Loo kasutaja</button>
             <br>
             <br>
           </form>
@@ -75,8 +75,8 @@ export default {
   },
   methods: {
     saveDataToSessionStorage: function () {
-      sessionStorage.setItem('username', this.user.username)
-      sessionStorage.setItem('password', this.user.password)
+      sessionStorage.setItem('userId', this.user.userId)
+      sessionStorage.setItem('roleId', this.user.roleId)
       sessionStorage.setItem('user', JSON.stringify(this.user))
 
     },
@@ -88,6 +88,19 @@ export default {
     displayTableDiv: function () {
       this.tableDivDisplay = true;
     },
+    // userLogin: function () {
+    //   let loginInfo = {
+    //     username: this.username,
+    //     password: this.password
+    //   }
+    //
+    //   this.$http.post("/login", loginInfo
+    //   ).then(response => {
+    //     console.log(response.data)
+    //   }).catch(error => {
+    //     console.log(error)
+    //   })
+    // },
 
     addNewUser: function () {
       let newUserInfo = {
@@ -101,11 +114,19 @@ export default {
 
       this.$http.post("/user/add", newUserInfo
       ).then(response => {
+        this.contactFirstName= response.data.contactFirstName
+        this.contactLastName = response.data.contactLastName
+        this.contactTelephone= response.data.contactTelephone
+        this.contactEmail= response.data.contactEmail
+        this.username = response.data.username
+        this.password = response.data.password
+        this.saveDataToSessionStorage()
         console.log(response.data)
       }).catch(error => {
         console.log(error)
       })
-    }
+    },
+
 
   },
 
