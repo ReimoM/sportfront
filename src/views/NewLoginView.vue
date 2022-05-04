@@ -3,9 +3,15 @@
     <h3>Sisselogimiseks täida väljad</h3>
     <br>
 
+
     <div v-if="successMessage.length > 0"class="alert alert-primary" role="alert">
       {{successMessage}}
     </div>
+
+    <div v-if="errorMessage.length > 0"class="alert alert-danger" role="alert">
+      {{errorMessage}}
+    </div>
+
     <div class="col-md-3 col-sm-12 mx-auto">
       <div v-if="tableDivDisplay" class="login-form">
         <form>
@@ -70,7 +76,9 @@ export default {
       newUserInfo: {},
       messageTitle: '',
       messageDescription: '',
-      successMessage: ''
+      successMessage: '',
+      errorMessage: '',
+      loginInfo:{}
 
     }
   },
@@ -89,19 +97,15 @@ export default {
     displayTableDiv: function () {
       this.tableDivDisplay = true;
     },
-    // userLogin: function () {
-    //   let loginInfo = {
-    //     username: this.username,
-    //     password: this.password
-    //   }
-    //
-    //   this.$http.post("/login", loginInfo
-    //   ).then(response => {
-    //     console.log(response.data)
-    //   }).catch(error => {
-    //     console.log(error)
-    //   })
-    // },
+
+    userLogin: function () {
+          this.$http.post("/login", this.loginInfo
+      ).then(response => {
+        console.log(response.data)
+      }).catch(error => {
+        console.log(error)
+      })
+    },
 
     addNewUser: function () {
 
@@ -112,17 +116,15 @@ export default {
 
       this.$http.post("/user/add", this.newUserInfo
       ).then(response => {
-        this.successMessage= 'Uus kasutaja lisatud, kasutjanimi: '+this.newUserInfo.username
+        this.successMessage= 'Uus kasutaja lisatud, kasutajanimi: '+ response.data.username + '.'
         // alert(this.successMessage)
         // sessionStorage.setItem('userId', response.data.userId)
         // push tu user home view
 
         // console.log(alert(response.data))
-      }).catch(error =>alert(error.response.data.title))
-      // {
-        // alert(error.response)
-        // // kuva veateadet kui username on kasutusel
-      // });
+      }).catch(error =>{
+        this.errorMessage = error.response.data.title +'. '+ error.response.data.detail +'.'
+      })
     },
 
 

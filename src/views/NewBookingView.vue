@@ -5,10 +5,10 @@
       <div class="form-row align-items-centre">
         <div class="col-3 my-1 offset-md-4">
           <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
-<!--          <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">-->
-<!--            <option  selected>Vali väljak</option>-->
-<!--            <option v-for="field in fields": value="field.fieldId">{{field.name}}</option>-->
-<!--          </select>-->
+          <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" >
+            <option  selected>Vali väljak</option>
+            <option v-for="field in fields" :value="field.id">{{field.name}}</option>
+          </select>
         </div>
         <div class="col-auto my-1">
           <button type="submit" class="btn btn-outline-primary">Kinnita väljak</button>
@@ -96,6 +96,9 @@ export default {
         console.log(error)
       })
     }
+  },
+  mounted() {
+    this.getAllFields();
   }
 }
 </script>
