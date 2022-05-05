@@ -1,7 +1,7 @@
 <template>
     <div>
       <h1>Siia aknasse tuled kui oled sisse loginud</h1>
-
+        {{userId}}
       <button type="submit" class="btn btn-outline-primary m-3">Minu andmed</button>
       <button type="submit" class="btn btn-outline-primary">Minu broneeringud</button>
 
@@ -13,7 +13,7 @@ export default {
   name: "UserView",
   data: function () {
     return {
-
+userId: sessionStorage.getItem('userId')
     }
 
   },

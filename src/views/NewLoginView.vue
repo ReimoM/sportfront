@@ -101,7 +101,11 @@ export default {
     userLogin: function () {
           this.$http.post("/login", this.loginInfo
       ).then(response => {
-        console.log(response.data)
+
+            if (response.data.roleId === 1) {
+
+            }
+        console.log(response.data);
       }).catch(error => {
         console.log(error)
       })
@@ -116,6 +120,9 @@ export default {
 
       this.$http.post("/user/add", this.newUserInfo
       ).then(response => {
+        sessionStorage.setItem('userId', response.data.userId)
+        this.$router.push({name: 'userRoute'}) //kuidas saab liikuda linkide vahel
+
         this.successMessage= 'Uus kasutaja lisatud, kasutajanimi: '+ response.data.username + '.'
         // alert(this.successMessage)
         // sessionStorage.setItem('userId', response.data.userId)
