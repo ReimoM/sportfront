@@ -112,7 +112,7 @@ export default {
             }
         console.log(response.data);
       }).catch(error => {
-        console.log(error)
+            this.errorMessage = error.response.data.title +'. '+ error.response.data.detail +'.'
       })
     },
 

@@ -5,7 +5,7 @@
     <button type="submit" class="btn btn-outline-primary">Minu broneeringud</button>
     <br>
     <br>
-    <button type="submit" v-bind:disabled="logOut" v-on:click="logOut" class="btn btn-outline-danger m-3">Logi välja</button>
+    <button type="submit" v-on:click="logOut" class="btn btn-outline-danger m-3">Logi välja</button>
 
 
   </div>
@@ -17,7 +17,6 @@ export default {
   data: function () {
     return {
       userId: sessionStorage.getItem('userId'),
-      logOut: {}
     }
 
   },
@@ -31,11 +30,7 @@ export default {
       })
     },
     logOut: function () {
-      if (sessionStorage.getItem('userId')=== null) {
-        this.logOut = true
-      } else {
-        this.logOut = false
-      }
+      sessionStorage.removeItem('userId')
     }
   }
 }
