@@ -1,10 +1,14 @@
 <template>
-    <div>
-      <h1>Siia aknasse tuled kui oled sisse loginud</h1>
-      <button type="submit" class="btn btn-outline-primary m-3">Minu andmed</button>
-      <button type="submit" class="btn btn-outline-primary">Minu broneeringud</button>
+  <div>
+    <h1>Siia aknasse tuled kui oled sisse loginud</h1>
+    <button type="submit" class="btn btn-outline-primary m-3">Minu andmed</button>
+    <button type="submit" class="btn btn-outline-primary">Minu broneeringud</button>
+    <br>
+    <br>
+    <button type="submit" v-bind:disabled="logOut" v-on:click="logOut" class="btn btn-outline-danger m-3">Logi välja</button>
 
-    </div>
+
+  </div>
 </template>
 
 <script>
@@ -12,7 +16,8 @@ export default {
   name: "UserView",
   data: function () {
     return {
-userId: sessionStorage.getItem('userId')
+      userId: sessionStorage.getItem('userId'),
+      logOut: {}
     }
 
   },
@@ -24,6 +29,13 @@ userId: sessionStorage.getItem('userId')
           }).catch(error => {
         console.log(error)
       })
+    },
+    logOut: function () {
+      if (sessionStorage.getItem('userId')=== null) {
+        this.logOut = true
+      } else {
+        this.logOut = false
+      }
     }
   }
 }
