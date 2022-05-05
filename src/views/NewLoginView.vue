@@ -3,7 +3,6 @@
     <h3>Sisselogimiseks täida väljad</h3>
     <br>
 
-
     <div v-if="successMessage.length > 0"class="alert alert-primary" role="alert">
       {{successMessage}}
     </div>
@@ -11,7 +10,6 @@
     <div v-if="errorMessage.length > 0"class="alert alert-danger" role="alert">
       {{errorMessage}}
     </div>
-
 
     <div class="col-md-3 col-sm-12 mx-auto">
       <div v-if="tableDivDisplay" class="login-form">
@@ -27,13 +25,10 @@
         <label>Kasutaja puudub?</label>
         <br>
         <button type="button" class="btn btn-primary" v-on:click="hideTableDiv">Loo kasutaja</button>
-
       </div>
       <br>
-
       <div>
         <div v-if="newUserDisplay" class="login-form">
-
             <div class="form-group">
               <input type="text" v-model="newUserInfo.contactFirstName" class="form-control" placeholder="Eesnimi">
             </div>
@@ -55,13 +50,9 @@
             <button v-on:click="addNewUser" type="submit" class="btn btn-success">Loo kasutaja</button>
             <br>
             <br>
-
         </div>
       </div>
-
-
     </div>
-
   </div>
 </template>
 
@@ -82,12 +73,6 @@ export default {
     }
   },
   methods: {
-    saveDataToSessionStorage: function () {
-      sessionStorage.setItem('userId', this.user.userId)
-      sessionStorage.setItem('roleId', this.user.roleId)
-      sessionStorage.setItem('user', JSON.stringify(this.user))
-
-    },
     hideTableDiv: function () {
       this.tableDivDisplay = false;
       this.newUserDisplay = true
@@ -113,31 +98,20 @@ export default {
     },
 
     addNewUser: function () {
-
       if (this.newUserInfo.contactFirstName.length === 0) {
         this.messageTitle = "Eesnimi on kohustuslik väli"
       }
-
-
       this.$http.post("/user/add", this.newUserInfo
       ).then(response => {
         sessionStorage.setItem('userId', response.data.userId)
         this.$router.push({name: 'userRoute'}) //kuidas saab liikuda linkide vahel
-
         this.successMessage= 'Uus kasutaja lisatud, kasutajanimi: '+ response.data.username + '.'
-        // alert(this.successMessage)
-        // sessionStorage.setItem('userId', response.data.userId)
-        // push tu user home view
 
-        // console.log(alert(response.data))
       }).catch(error =>{
         this.errorMessage = error.response.data.title +'. '+ error.response.data.detail +'.'
       })
     },
-
-
   },
-
 
 }
 </script>
