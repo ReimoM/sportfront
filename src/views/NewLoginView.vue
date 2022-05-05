@@ -16,12 +16,12 @@
       <div v-if="tableDivDisplay" class="login-form">
         <form>
           <div class="form-group">
-            <input type="text" class="form-control" placeholder="Kasutajanimi">
+            <input type="text" v-model="newLogIn.username" class="form-control" placeholder="Kasutajanimi">
           </div>
           <div class="form-group">
-            <input type="password" class="form-control" placeholder="Parool">
+            <input type="password" v-model="newLogIn.password" class="form-control" placeholder="Parool">
           </div>
-          <button v-on:click="$router.push('user')" type="submit" class="btn btn-success">Logi sisse</button>
+          <button v-on:click="userLogin" type="submit" class="btn btn-success">Logi sisse</button>
           <br>
           <br>
         </form>
@@ -74,6 +74,7 @@ export default {
       tableDivDisplay: true,
       newUserDisplay: false,
       newUserInfo: {},
+      newLogIn: {},
       messageTitle: '',
       messageDescription: '',
       successMessage: '',
@@ -99,11 +100,15 @@ export default {
     },
 
     userLogin: function () {
-          this.$http.post("/login", this.loginInfo
+          this.$http.post("/login", this.newLogIn
       ).then(response => {
 
             if (response.data.roleId === 1) {
-
+              sessionStorage.setItem('userId', response.data.userId)
+              this.$router.push({name: 'userRoute'})
+            } else {
+              sessionStorage.setItem('userId', response.data.userId)
+              this.$router.push({name: 'homeRoute'})
             }
         console.log(response.data);
       }).catch(error => {
