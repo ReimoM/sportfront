@@ -21,16 +21,9 @@ export default {
 
   },
   methods: {
-    someMethodName: function () {
-      this.$http.get("/some/path")
-          .then(response => {
-            console.log(response.data)
-          }).catch(error => {
-        console.log(error)
-      })
-    },
     logOut: function () {
       sessionStorage.removeItem('userId')
+      this.$router.push({name: 'homeRoute'})
     }
   }
 }
