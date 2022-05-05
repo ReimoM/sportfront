@@ -12,9 +12,9 @@
       {{errorMessage}}
     </div>
 
+
     <div class="col-md-3 col-sm-12 mx-auto">
       <div v-if="tableDivDisplay" class="login-form">
-        <form>
           <div class="form-group">
             <input type="text" v-model="newLogIn.username" class="form-control" placeholder="Kasutajanimi">
           </div>
@@ -24,7 +24,6 @@
           <button v-on:click="userLogin" type="submit" class="btn btn-success">Logi sisse</button>
           <br>
           <br>
-        </form>
         <label>Kasutaja puudub?</label>
         <br>
         <button type="button" class="btn btn-primary" v-on:click="hideTableDiv">Loo kasutaja</button>
@@ -79,7 +78,6 @@ export default {
       messageDescription: '',
       successMessage: '',
       errorMessage: '',
-      loginInfo:{}
 
     }
   },
@@ -102,17 +100,20 @@ export default {
     userLogin: function () {
           this.$http.post("/login", this.newLogIn
       ).then(response => {
-
-            if (response.data.roleId === 1) {
-              sessionStorage.setItem('userId', response.data.userId)
+        alert("success algus")
+            console.log("START FROM HERE")
+            sessionStorage.setItem('userId', response.data.userId)
+            if (response.data.roleId == 1) {
+              alert("roleId == 1")
               this.$router.push({name: 'userRoute'})
             } else {
-              sessionStorage.setItem('userId', response.data.userId)
+              alert("roleId != 1")
               this.$router.push({name: 'homeRoute'})
             }
-        console.log(response.data);
+            alert("success lõpp")
       }).catch(error => {
-            this.errorMessage = error.response.data.title +'. '+ error.response.data.detail +'.'
+            alert('ERROR')
+            this.errorMessage= error.response.data.title +'. '+ error.response.data.detail +'.'
       })
     },
 

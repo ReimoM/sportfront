@@ -5,7 +5,7 @@
       <button @click="$router.push('home')" class="btn btn-outline-primary" >Pealeht</button>
       <button @click="$router.push('fields')" class="btn btn-outline-primary" >Vaata väljakuid</button>
       <button @click="$router.push('booking')" class="btn btn-outline-primary" >Broneeri väljak</button>
-      <button @click="$router.push('login')" class="btn btn-outline-primary" >Sisselogimine</button>
+      <button @click="$router.push({name: 'loginRoute'})" class="btn btn-outline-primary" >Sisselogimine</button>
       <button @click="$router.push('user')" class="btn btn-outline-primary" >Kasutaja</button>
     </nav>
     <router-view/>
