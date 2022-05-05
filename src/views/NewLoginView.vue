@@ -100,17 +100,13 @@ export default {
     userLogin: function () {
           this.$http.post("/login", this.newLogIn
       ).then(response => {
-        alert("success algus")
             console.log("START FROM HERE")
             sessionStorage.setItem('userId', response.data.userId)
             if (response.data.roleId === 1) {
-              alert("roleId == 1")
               this.$router.push({name: 'userRoute'})
             } else {
-              alert("roleId != 1")
               this.$router.push({name: 'homeRoute'})
             }
-            alert("success lõpp")
       }).catch(error => {
             this.errorMessage= error.response.data.title +'. '+ error.response.data.detail +'.'
       })
