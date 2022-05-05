@@ -33,7 +33,7 @@
 
       <div>
         <div v-if="newUserDisplay" class="login-form">
-          <form>
+
             <div class="form-group">
               <input type="text" v-model="newUserInfo.contactFirstName" class="form-control" placeholder="Eesnimi">
             </div>
@@ -55,7 +55,7 @@
             <button v-on:click="addNewUser" type="submit" class="btn btn-success">Loo kasutaja</button>
             <br>
             <br>
-          </form>
+
         </div>
       </div>
 
