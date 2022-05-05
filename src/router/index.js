@@ -10,8 +10,8 @@ Vue.use(VueRouter)
 
 const routes = [
     {
-        path: '/home',
-        name: '/homeRoute',
+        path: '/',
+        name: 'homeRoute',
         component: HomeView
     },
     {
@@ -25,13 +25,13 @@ const routes = [
         component: NewBookingView
     },
     {
-        path: '/login',
+        path: '/log-in',
         name: 'loginRoute',
         component: NewLoginView
     },
     {
         path: '/user',
-        name: '/userRoute',
+        name: 'userRoute',
         component: UserView
     }
 ]

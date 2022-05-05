@@ -3,23 +3,63 @@
     <h3>Sisselogimiseks täida väljad</h3>
     <br>
 
+
+    <div v-if="successMessage.length > 0"class="alert alert-primary" role="alert">
+      {{successMessage}}
+    </div>
+
+    <div v-if="errorMessage.length > 0"class="alert alert-danger" role="alert">
+      {{errorMessage}}
+    </div>
+
+
     <div class="col-md-3 col-sm-12 mx-auto">
-      <div class="login-form">
-        <form>
+      <div v-if="tableDivDisplay" class="login-form">
           <div class="form-group">
-            <input type="text" class="form-control" placeholder="Kasutajanimi">
+            <input type="text" v-model="newLogIn.username" class="form-control" placeholder="Kasutajanimi">
           </div>
           <div class="form-group">
-            <input type="password" class="form-control" placeholder="Parool">
+            <input type="password" v-model="newLogIn.password" class="form-control" placeholder="Parool">
           </div>
           <button v-on:click="userLogin" type="submit" class="btn btn-success">Logi sisse</button>
           <br>
           <br>
-          <label>Kasutaja puudub?</label>
-          <br>
-          <button type="submit" class="btn btn-primary">Loo kasutaja</button>
-        </form>
+        <label>Kasutaja puudub?</label>
+        <br>
+        <button type="button" class="btn btn-primary" v-on:click="hideTableDiv">Loo kasutaja</button>
+
       </div>
+      <br>
+
+      <div>
+        <div v-if="newUserDisplay" class="login-form">
+          <form>
+            <div class="form-group">
+              <input type="text" v-model="newUserInfo.contactFirstName" class="form-control" placeholder="Eesnimi">
+            </div>
+            <div class="form-group">
+              <input type="text" v-model="newUserInfo.contactLastName" class="form-control" placeholder="Perekonnanimi">
+            </div>
+            <div class="form-group">
+              <input type="text" v-model="newUserInfo.contactTelephone" class="form-control" placeholder="Telefon">
+            </div>
+            <div class="form-group">
+              <input type="text" v-model="newUserInfo.contactEmail" class="form-control" placeholder="E-mail">
+            </div>
+            <div class="form-group">
+              <input type="text" v-model="newUserInfo.username" class="form-control" placeholder="Kasutajanimi">
+            </div>
+            <div class="form-group">
+              <input type="password" v-model="newUserInfo.password" class="form-control" placeholder="Parool">
+            </div>
+            <button v-on:click="addNewUser" type="submit" class="btn btn-success">Loo kasutaja</button>
+            <br>
+            <br>
+          </form>
+        </div>
+      </div>
+
+
     </div>
 
   </div>
@@ -30,47 +70,80 @@ export default {
   name: "NewLoginView",
   data: function () {
     return {
-      username: '',
-      password: '',
+      tableDivDisplay: true,
+      newUserDisplay: false,
+      newUserInfo: {},
+      newLogIn: {},
+      messageTitle: '',
+      messageDescription: '',
       successMessage: '',
+      errorMessage: '',
+
     }
   },
   methods: {
     saveDataToSessionStorage: function () {
-      sessionStorage.setItem('username', this.user.username)
-      sessionStorage.setItem('password', this.user.password)
+      sessionStorage.setItem('userId', this.user.userId)
+      sessionStorage.setItem('roleId', this.user.roleId)
       sessionStorage.setItem('user', JSON.stringify(this.user))
 
     },
-    userLogin: function () {
-      this.$http.get("/login", {
-            params: {
-              username: this.username,
-              password: this.password
-            }
-          }
-      ).then(response => {
-        console.log(response.data)
-      }).catch(error => {
-        console.log(error)
-      })
-    }
+    hideTableDiv: function () {
+      this.tableDivDisplay = false;
+      this.newUserDisplay = true
+    },
 
-    // userLogin: function () {
-    //   let userData = {
-    //     username: this.username,
-    //     password: this.password,
-    //   }
-    //
-    //   this.$http.post("/login", userData
-    //   ).then(response => {
-    //     this.successMessage = "Sisselogimine õnnestus, tere tuelmast."
-    //     console.log(response.data)
-    //   }).catch(error => {
-    //     console.log(error)
-    //   })
-    // }
+    displayTableDiv: function () {
+      this.tableDivDisplay = true;
+    },
+
+    userLogin: function () {
+          this.$http.post("/login", this.newLogIn
+      ).then(response => {
+        alert("success algus")
+            console.log("START FROM HERE")
+            sessionStorage.setItem('userId', response.data.userId)
+            if (response.data.roleId == 1) {
+              alert("roleId == 1")
+              this.$router.push({name: 'userRoute'})
+            } else {
+              alert("roleId != 1")
+              this.$router.push({name: 'homeRoute'})
+            }
+            alert("success lõpp")
+      }).catch(error => {
+            alert('ERROR')
+            this.errorMessage= error.response.data.title +'. '+ error.response.data.detail +'.'
+      })
+    },
+
+    addNewUser: function () {
+
+      if (this.newUserInfo.contactFirstName.length === 0) {
+        this.messageTitle = "Eesnimi on kohustuslik väli"
+      }
+
+
+      this.$http.post("/user/add", this.newUserInfo
+      ).then(response => {
+        sessionStorage.setItem('userId', response.data.userId)
+        this.$router.push({name: 'userRoute'}) //kuidas saab liikuda linkide vahel
+
+        this.successMessage= 'Uus kasutaja lisatud, kasutajanimi: '+ response.data.username + '.'
+        // alert(this.successMessage)
+        // sessionStorage.setItem('userId', response.data.userId)
+        // push tu user home view
+
+        // console.log(alert(response.data))
+      }).catch(error =>{
+        this.errorMessage = error.response.data.title +'. '+ error.response.data.detail +'.'
+      })
+    },
+
+
   },
+
+
 }
 </script>
 

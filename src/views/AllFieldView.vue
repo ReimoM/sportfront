@@ -7,7 +7,6 @@
 
         <thead>
         <tr class="table-hover table-active">
-          <th scope="col">Väljaku ID</th>
           <th scope="col">Väljaku asukoht</th>
           <th scope="col">Väljaku nimi</th>
           <th scope="col"></th>
@@ -16,7 +15,6 @@
 
         <tbody>
         <tr class="table-hover table-success" v-for="field in fields">
-          <td>{{ field.id }}</td>
           <td>{{ field.locationCounty }}</td>
           <td>{{ field.name }}</td>
           <td>
