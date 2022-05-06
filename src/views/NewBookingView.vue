@@ -4,8 +4,8 @@
     <form >
       <div class="form-row align-items-centre">
         <div class="col-3 my-1 mx-auto">
-          <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
-          <select v-model="selectedFieldId" v-on:change="test123" class="custom-select mr-sm-2" id="inlineFormCustomSelect" >
+          <label class="mr-sm-2 sr-only" >Preference</label>
+          <select v-model="selectedFieldId" v-on:change="updateFieldId" class="custom-select mr-sm-2"  >
             <option  selected>Vali väljak</option>
             <option v-for="field in fields" :value="field.id">{{field.name}}</option>
           </select>
@@ -17,10 +17,10 @@
       {{sportsId}}
       <div class="form-row align-items-center">
         <div class="col-3 my-1 mx-auto">
-          <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
-          <select v-model="sportsId" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+          <label class="mr-sm-2 sr-only" >Preference</label>
+          <select v-model="sportsId" class="custom-select mr-sm-2">
             <option value="0" selected>Vali spordiala</option>
-            <option v-for="sportsSportsType in sportsSportsTypes":value="sportsField.sportsId" >{{ sp }}</option>
+            <option v-for="sportsType in sportsSportsTypes" :value="sportsField.sportsId" >{{ sportsType.sportsId }}</option>
             <option value="2">Two</option>
             <option value="3">Three</option>
           </select>
@@ -28,18 +28,21 @@
       </div>
     </form>
     <br>
+<!--    <div id="date-picker-example" class="md-form md-outline col-3 my-1 mx-auto input-with-post-icon datepicker mx-auto" inline="true">-->
+<!--      <input placeholder="Vali kuupäev" type="text" id="example" class="form-control">-->
+<!--      <label for="example">Kuupäeva valik</label>-->
+<!--      <i class="fas fa-calendar input-prefix"></i>-->
+<!--    </div>-->
     <form>
       <div class="form-row align-items-center">
         <div class="col-3 my-1 mx-auto">
-          <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
+          <label class="mr-sm-2 sr-only" >Preference</label>
           <input type="date" name="" id="">
         </div>
       </div>
     </form>
     <br>
-
-    <br>
-    <button type="submit" class="btn btn-success">Kinnita broneering</button>
+    <button type="submit" class="btn btn-primary">Näita kellaaegu valitud kuupäeval</button>
   </div>
 </template>
 
@@ -53,9 +56,10 @@ export default {
       name: this.name,
       fields: this.fields,
       locationId: this.locationId,
-      sportsSportsTypes: this.sportsSportsTypes,
-      sportsId: 0,
+      sportsTypes: this.sportsSportsTypes,
+      sportsId: this.sportsId,
       selectedFieldId: 0,
+
     }
 
   },
@@ -67,8 +71,6 @@ export default {
             this.fields = response.data
             this.selectedFieldId = this.fieldId
             console.log(response.data)
-
-
           }).catch(error => {
         console.log(error)
       })
@@ -76,8 +78,8 @@ export default {
     test123: function () {
       alert('test123')
     },
-    someMethodName: function () {
-      this.$http.get("/sportsfield/fieldId", {params: {someParam: this.fieldId}}
+    getSportfields: function () {
+      this.$http.get("/sportsfield/fieldId", {params: {someParam: this.selectedFieldId}}
       ).then(response => {
         console.log(response.data)
       }).catch(error => {
@@ -88,7 +90,7 @@ export default {
   },
   mounted() {
     this.getAllFields();
-    this.sportsId();
+    this.getSportfields();
 
   }
 }

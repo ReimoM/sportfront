@@ -2,9 +2,7 @@
   <div >
     <h2 >Väljakud meie süsteemis</h2>
     <div>
-
       <table class="table table-hover table-bordered table-striped ">
-
         <thead>
         <tr class="table-hover table-active">
           <th scope="col">Väljaku asukoht</th>
@@ -12,13 +10,12 @@
           <th scope="col"></th>
         </tr>
         </thead>
-
         <tbody>
-        <tr class="table-hover table-success" v-for="field in fields">
+        <tr class="table-hover table-primary" v-for="field in fields">
           <td>{{ field.locationCounty }}</td>
           <td>{{ field.name }}</td>
           <td>
-            <button type="button" class="btn btn-secondary" v-on:click="navigateToBookings(field.id)">Vali väljak</button>
+            <button  type="button" class="btn btn-outline-primary" v-on:click="navigateToBookings(field.id)">Vali väljak</button>
           </td>
         </tr>
         </tbody>
@@ -28,7 +25,6 @@
 </template>
 
 <script>
-import router from "@/router";
 
 export default {
   name: "AllFieldView",
@@ -39,6 +35,7 @@ export default {
       name: this.name,
       fields: this.fields,
       locationId: this.locationId,
+      userId: sessionStorage.getItem('userId')
 
     }
   },

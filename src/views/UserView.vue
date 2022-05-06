@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     logOut: function () {
-      sessionStorage.removeItem('userId')
+      sessionStorage.clear()
       this.$router.push({name: 'homeRoute'})
     }
   }
