@@ -5,7 +5,7 @@
       <div class="form-row align-items-centre">
         <div class="col-3 my-1 mx-auto">
           <label class="mr-sm-2 sr-only" >Preference</label>
-          <select v-model="selectedFieldId" v-on:change="updateFieldId" class="custom-select mr-sm-2"  >
+          <select v-model="selectedFieldId" v-on:change="test123" class="custom-select mr-sm-2"  >
             <option  selected>Vali väljak</option>
             <option v-for="field in fields" :value="field.id">{{field.name}}</option>
           </select>
@@ -14,15 +14,13 @@
     </form>
     <br>
     <form>
-      {{sportsId}}
+      {{sportsSportsType}}
       <div class="form-row align-items-center">
         <div class="col-3 my-1 mx-auto">
           <label class="mr-sm-2 sr-only" >Preference</label>
-          <select v-model="sportsId" class="custom-select mr-sm-2">
-            <option value="0" selected>Vali spordiala</option>
-            <option v-for="sportsType in sportsSportsTypes" :value="sportsField.sportsId" >{{ sportsType.sportsId }}</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+          <select v-model="sportsId" v-on:change=""  class="custom-select mr-sm-2">
+            <option selected>Vali spordiala</option>
+            <option v-for="sportField in sportFields" :value="sportField.sportsId" >{{ sportField.sportsSportsType }}</option>
           </select>
         </div>
       </div>
@@ -34,12 +32,10 @@
 <!--      <i class="fas fa-calendar input-prefix"></i>-->
 <!--    </div>-->
     <form>
-      <div class="form-row align-items-center">
         <div class="col-3 my-1 mx-auto">
           <label class="mr-sm-2 sr-only" >Preference</label>
           <input type="date" name="" id="">
         </div>
-      </div>
     </form>
     <br>
     <button type="submit" class="btn btn-primary">Näita kellaaegu valitud kuupäeval</button>
@@ -47,6 +43,7 @@
 </template>
 
 <script>
+
 export default {
   name: "NewBookingView",
   data: function () {
@@ -56,14 +53,15 @@ export default {
       name: this.name,
       fields: this.fields,
       locationId: this.locationId,
-      sportsTypes: this.sportsSportsTypes,
+      sportFields: this.sportFields,
       sportsId: this.sportsId,
       selectedFieldId: 0,
+      bookingDate: {},
+      sportsSportsType: this.sportsSportsType,
 
     }
 
   },
-
   methods:{
     getAllFields: function () {
       this.$http.get("/field/all")
@@ -76,11 +74,21 @@ export default {
       })
     },
     test123: function () {
-      alert('test123')
+      alert(this.selectedFieldId)
     },
     getSportfields: function () {
-      this.$http.get("/sportsfield/fieldId", {params: {someParam: this.selectedFieldId}}
+      this.$http.get("/sportsfield/fieldId", {params: {fieldId: this.fieldId}}
       ).then(response => {
+        this.sportFields = response.data
+        console.log(response.data)
+      }).catch(error => {
+        console.log(error)
+      })
+    },
+    availableBookingDates: function () {
+      this.$http.post("/some/path", this.bookingDate
+      ).then(response => {
+
         console.log(response.data)
       }).catch(error => {
         console.log(error)

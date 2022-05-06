@@ -35,7 +35,6 @@ export default {
       name: this.name,
       fields: this.fields,
       locationId: this.locationId,
-      userId: sessionStorage.getItem('userId')
 
     }
   },
