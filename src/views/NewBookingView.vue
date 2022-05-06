@@ -26,11 +26,6 @@
       </div>
     </form>
     <br>
-<!--    <div id="date-picker-example" class="md-form md-outline col-3 my-1 mx-auto input-with-post-icon datepicker mx-auto" inline="true">-->
-<!--      <input placeholder="Vali kuupäev" type="text" id="example" class="form-control">-->
-<!--      <label for="example">Kuupäeva valik</label>-->
-<!--      <i class="fas fa-calendar input-prefix"></i>-->
-<!--    </div>-->
     <form>
         <div class="col-3 my-1 mx-auto">
           <label class="mr-sm-2 sr-only" >Preference</label>
