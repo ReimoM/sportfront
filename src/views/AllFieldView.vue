@@ -18,7 +18,7 @@
           <td>{{ field.locationCounty }}</td>
           <td>{{ field.name }}</td>
           <td>
-            <button type="button" class="btn btn-secondary" v-on:click="$router.push('booking')">Vali väljak</button>
+            <button type="button" class="btn btn-secondary" v-on:click="navigateToBookings(field.id)">Vali väljak</button>
           </td>
         </tr>
         </tbody>
@@ -28,6 +28,8 @@
 </template>
 
 <script>
+import router from "@/router";
+
 export default {
   name: "AllFieldView",
   data: function () {
@@ -49,6 +51,12 @@ export default {
           }).catch(error => {
         console.log(error)
       })
+    },
+    navigateToBookings: function (fieldId) {
+      sessionStorage.setItem('fieldId', fieldId)
+      this.$router.push({name: 'bookingRoute'})
+
+
     }
   },
   mounted() {

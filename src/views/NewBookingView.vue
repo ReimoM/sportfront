@@ -3,70 +3,41 @@
     <h1>Siia tuleb väljaku broneerimine</h1>
     <form >
       <div class="form-row align-items-centre">
-        <div class="col-3 my-1 offset-md-4">
+        <div class="col-3 my-1 mx-auto">
           <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
-          <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" >
+          <select v-model="selectedFieldId" v-on:change="test123" class="custom-select mr-sm-2" id="inlineFormCustomSelect" >
             <option  selected>Vali väljak</option>
             <option v-for="field in fields" :value="field.id">{{field.name}}</option>
           </select>
         </div>
-        <div class="col-auto my-1">
-          <button type="submit" class="btn btn-outline-primary">Kinnita väljak</button>
+      </div>
+    </form>
+    <br>
+    <form>
+      {{sportsId}}
+      <div class="form-row align-items-center">
+        <div class="col-3 my-1 mx-auto">
+          <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
+          <select v-model="sportsId" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+            <option value="0" selected>Vali spordiala</option>
+            <option v-for="sportsSportsType in sportsSportsTypes":value="sportsField.sportsId" >{{ sp }}</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
         </div>
       </div>
     </form>
     <br>
     <form>
       <div class="form-row align-items-center">
-        <div class="col-3 my-1 offset-md-4">
+        <div class="col-3 my-1 mx-auto">
           <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
-          <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-            <option selected>Vali spordiala</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-          </select>
-        </div>
-        <div class="col-auto my-1">
-          <button type="submit" class="btn btn-outline-primary">Kinnita sport</button>
+          <input type="date" name="" id="">
         </div>
       </div>
     </form>
     <br>
-    <form>
-      <div class="form-row align-items-center">
-        <div class="col-3 my-1 offset-md-4">
-          <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
-          <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-            <option selected>Vali kuupäev</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-          </select>
-        </div>
-        <div class="col-auto my-1">
-          <button type="submit" class="btn btn-outline-primary">Kinnita kuupäev</button>
-        </div>
-      </div>
-    </form>
-    <br>
-    <form>
-      <div class="form-row align-items-center">
-        <div class="col-3 my-1 offset-md-4">
-          <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
-          <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-            <option selected>Vali kellaaeg</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-          </select>
-        </div>
-        <div class="col-auto my-1">
-          <button type="submit" class="btn btn-outline-primary">Kinnita kellaaeg</button>
-        </div>
-      </div>
-    </form>
-    <br>
+
     <br>
     <button type="submit" class="btn btn-success">Kinnita broneering</button>
   </div>
@@ -77,11 +48,14 @@ export default {
   name: "NewBookingView",
   data: function () {
     return {
-      id: 0,
+      fieldId: sessionStorage.getItem('fieldId'),
       locationCounty: this.locationCounty,
       name: this.name,
       fields: this.fields,
       locationId: this.locationId,
+      sportsSportsTypes: this.sportsSportsTypes,
+      sportsId: 0,
+      selectedFieldId: 0,
     }
 
   },
@@ -91,14 +65,31 @@ export default {
       this.$http.get("/field/all")
           .then(response => {
             this.fields = response.data
+            this.selectedFieldId = this.fieldId
             console.log(response.data)
+
+
           }).catch(error => {
         console.log(error)
       })
+    },
+    test123: function () {
+      alert('test123')
+    },
+    someMethodName: function () {
+      this.$http.get("/sportsfield/fieldId", {params: {someParam: this.fieldId}}
+      ).then(response => {
+        console.log(response.data)
+      }).catch(error => {
+        console.log(error)
+      })
     }
+
   },
   mounted() {
     this.getAllFields();
+    this.sportsId();
+
   }
 }
 </script>
