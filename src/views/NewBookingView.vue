@@ -17,9 +17,9 @@
       <div class="form-row align-items-center">
         <div class="col-3 my-1 mx-auto">
           <label class="mr-sm-2 sr-only"  >Preference</label>
-          <select v-model="selectedSportsFieldId" class="custom-select mr-sm-2">
+          <select v-model="selectedSportsFieldId"   class="custom-select mr-sm-2">
             <option value="0">Vali spordiala</option>
-            <option v-for="sportField in sportFields" :value="sportField.sportsId" >{{ sportField.sportsSportsType }}</option>
+            <option v-for="sportField in sportFields" :value="sportField.id" >{{ sportField.sportsSportsType }}</option>
           </select>
         </div>
       </div>
@@ -28,11 +28,11 @@
     <form>
         <div class="col-3 my-1 mx-auto">
           <label class="mr-sm-2 sr-only" >Preference</label>
-          <input type="date" name="" id="">
+          <input v-model="date" type="date" name="" id="">
         </div>
     </form>
     <br>
-    <button type="submit" class="btn btn-primary" v-on:change="availableBookingTimes">Näita kellaaegu valitud kuupäeval</button>
+    <button type="submit" class="btn btn-primary" v-on:click="availableBookingTimes">Näita kellaaegu valitud kuupäeval</button>
   </div>
 </template>
 
@@ -48,7 +48,7 @@ export default {
       selectedFieldId: 0,
       selectedSportsFieldId: 0,
       availableTimes: {},
-
+      date: {}
     }
 
   },
@@ -81,9 +81,13 @@ export default {
       })
     },
     availableBookingTimes: function () {
-      this.$http.post("/field-booking", this.availableTimes
-      ).then(response => {
+      let bookingInfo = {
+        sportsFieldId: this.selectedSportsFieldId,
+        date: this.date
+      }
 
+      this.$http.post("/field-booking", bookingInfo
+      ).then(response => {
         console.log(response.data)
       }).catch(error => {
         console.log(error)

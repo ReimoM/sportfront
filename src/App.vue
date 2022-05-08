@@ -5,12 +5,23 @@
       <button @click="$router.push('/')" class="btn btn-outline-primary" >Pealeht</button>
       <button @click="$router.push('fields')" class="btn btn-outline-primary" >Vaata väljakuid</button>
       <button @click="$router.push('booking')" class="btn btn-outline-primary" >Broneeri väljak</button>
-      <button @click="$router.push({name: 'loginRoute'})" class="btn btn-outline-primary" >Sisselogimine</button>
-      <button @click="$router.push('user')" class="btn btn-outline-primary" >Kasutaja</button>
+      <button :title="getUserId() ? 'Olete sisseloginud' : 'Logi sisse'" :disabled="getUserId() > 0" @click="$router.push({name: 'loginRoute'})" class="btn btn-outline-primary" >Sisselogimine</button>
+      <button :title="getUserId() ? '' : 'Logi sisse'" :disabled="!getUserId()" @click="$router.push('user')" class="btn btn-outline-primary" >Kasutaja</button>
     </nav>
     <router-view/>
   </div>
 </template>
+<script>
+export default {
+  methods: {
+    getUserId: function () {
+      return sessionStorage.getItem('userId')
+
+    }
+  }
+}
+
+</script>
 
 <style>
 
