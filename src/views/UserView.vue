@@ -17,6 +17,8 @@ export default {
   data: function () {
     return {
       userId: sessionStorage.getItem('userId'),
+      contacts: {},
+
     }
 
   },
@@ -24,6 +26,19 @@ export default {
     logOut: function () {
       sessionStorage.clear()
       this.$router.push({name: 'homeRoute'})
+    },
+    userData: function () {
+      this.$http.get("/contact/id", {
+            params: {
+              userId: this.userId
+            }
+          }
+      ).then(response => {
+        this.contacts = response.data
+        console.log(response.data)
+      }).catch(error => {
+        console.log(error)
+      })
     }
   }
 }
