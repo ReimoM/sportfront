@@ -39,7 +39,7 @@
       </div>
     </div>
     <br>
-    <button type="submit" class="btn btn-primary" v-on:click="confirmBooking">Broneeri</button>
+    <button :disabled="!getUserId()" type="submit" class="btn btn-primary" v-on:click="confirmBooking">Broneeri</button>
 
 
   </div>
@@ -92,6 +92,7 @@ export default {
     availableBookingTimes: function () {
       let bookingInfo = {
         fieldId: this.fieldId,
+        sportsFieldId: this.selectedSportsFieldId,
         date: this.date,
 
       };
@@ -103,7 +104,7 @@ export default {
         console.log(error)
       })
     },
-    confirmBooking: function () {
+    confirmBooking: async function () {
       let bookingConfirmation = {
         userId: sessionStorage.getItem('userId'),
         sportsFieldId: this.selectedSportsFieldId,
@@ -111,13 +112,17 @@ export default {
         timeSlots: this.availableTimes
 
       }
-      this.$http.post("/field-booking/new", bookingConfirmation
+    await  this.$http.post("/field-booking/new", bookingConfirmation
       ).then(response => {
         this.bookedFields = response.data
         console.log(response.data)
       }).catch(error => {
         console.log(error)
       })
+    },
+    getUserId: function () {
+      return sessionStorage.getItem('userId')
+
     }
 
 
