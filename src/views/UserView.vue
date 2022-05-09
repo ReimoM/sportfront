@@ -3,7 +3,7 @@
 
     <div>
     <h1>Siia aknasse tuled kui oled sisse loginud</h1>
-    <button type="submit" class="btn btn-outline-primary m-3">Minu andmed</button>
+    <button type="submit" class="btn btn-outline-primary m-3" v-on:click="displayTableDiv">Minu andmed</button>
     <button type="submit" class="btn btn-outline-primary" v-on:click="hideTableDiv">Minu broneeringud</button>
     <br>
 
@@ -12,7 +12,6 @@
 
           <thead>
           <tr class="table-hover table-success">
-            <th scope="col">#</th>
             <th scope="col">Väljak</th>
             <th scope="col">Sport</th>
             <th scope="col">Kuupäev</th>
@@ -23,7 +22,6 @@
 
           <tbody>
           <tr class="table-hover table-primary" v-for="booking in bookings">
-            <th scope="row">*</th>
             <td>{{booking.sportsFieldName}}</td>
             <td>{{booking.sportsType}}</td>
             <td>{{booking.date}}</td>
@@ -33,8 +31,36 @@
           </tbody>
 
         </table>
+      </div>
+
+      <div v-if="contactDisplay">
+        <table class="table table-hover table-bordered table-striped">
+
+          <thead>
+          <tr class="table-hover table-success">
+            <th scope="col">Eesnimi</th>
+            <th scope="col">Perekonna nimi</th>
+            <th scope="col">Telefon</th>
+            <th scope="col">Email</th>
+
+          </tr>
+          </thead>
+
+          <tbody>
+          <tr class="table-hover table-primary">
+            <td>{{contacts.firstName}}</td>
+            <td>{{contacts.lastName}}</td>
+            <td>{{contacts.telephone}}</td>
+            <td>{{contacts.email}}</td>
+
+          </tr>
+          </tbody>
+
+        </table>
+      </div>
 
     <br>
+      <div>
     <button type="submit" v-on:click="logOut" class="btn btn-outline-danger m-3">Logi välja</button>
     </div>
 
@@ -59,7 +85,7 @@ export default {
       bookings: [],
       booking: {},
       tableDivDisplay: false,
-      newUserDisplay: false
+      contactDisplay: false
 
     }
 
@@ -72,7 +98,7 @@ export default {
     userData: function () {
       this.$http.get("/contact/id", {
             params: {
-              userId: this.userId
+              id: this.userId
             }
           }
       ).then(response => {
@@ -98,11 +124,15 @@ export default {
     },
 
     hideTableDiv: function () {
-      this.tableDivDisplay = true;
+      this.tableDivDisplay = true
+      this.contactDisplay = false
+
     },
 
     displayTableDiv: function () {
-      this.tableDivDisplay = true;
+      this.tableDivDisplay = false
+      this.contactDisplay = true
+
     }
 
 
@@ -111,6 +141,7 @@ export default {
 
   mounted() {
     this.getMyBookings()
+    this.userData()
   }
 
 }
