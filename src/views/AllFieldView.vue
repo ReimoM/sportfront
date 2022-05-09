@@ -3,8 +3,8 @@
     <h2 >Väljakud meie süsteemis</h2>
     <div>
       <table class="table table-hover table-bordered table-striped ">
-        <thead>
-        <tr class="table-hover table-active">
+        <thead class="black white-text">
+        <tr class="table-hover table-active" >
           <th scope="col">Väljaku asukoht</th>
           <th scope="col">Väljaku nimi</th>
           <th scope="col"></th>
