@@ -5,6 +5,7 @@ import AllFieldView from "@/views/AllFieldView";
 import NewBookingView from "@/views/NewBookingView";
 import NewLoginView from "@/views/NewLoginView";
 import UserView from "@/views/UserView";
+import AdminView from "@/views/AdminView";
 
 Vue.use(VueRouter)
 
@@ -33,6 +34,11 @@ const routes = [
         path: '/user',
         name: 'userRoute',
         component: UserView
+    },
+    {
+        path: '/admin',
+        name: 'adminRoute',
+        component: AdminView
     }
 ]
 
