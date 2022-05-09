@@ -41,12 +41,14 @@
       <div class="form-row align-items-center">
         <div class="col-3 my-1 mx-auto">
           <label class="mr-sm-2 sr-only">Preference</label>
-          <select v-model="availableTimesForField" class="custom-select mr-sm-2">
+          <select v-model="availableTimesForField"  class="custom-select mr-sm-2">
             <option value="0">Vali kellaaeg</option>
-            <option v-for="availableTime in availableTimes" :value="availableTime.timeSlotInfo">{{ availableTime.timeSlotInfo }}</option>
+            <option v-for="availableTime in availableTimes" :value="availableTime.id">{{ availableTime.timeSlotInfo }}</option>
           </select>
         </div>
       </div>
+      <br>
+      <button type="submit" class="btn btn-primary" v-on:click="confirmBooking">Broneeri</button>
     </form>
 
 
@@ -66,7 +68,10 @@ export default {
       selectedSportsFieldId: 0,
       availableTimes: {},
       availableTimesForField: 0,
-      date: {}
+      date: {},
+      bookedFields: {},
+      timeSlot: {}
+
     }
 
   },
@@ -85,8 +90,8 @@ export default {
       this.fieldId = this.selectedFieldId
       this.getSportfields()
     },
-    sportFieldId: function (sportsFieldId) {
-      sessionStorage.setItem('sportFieldId', sportsFieldId)
+    getTimeSlot: function () {
+      this.availableTimes= this.availableTimesForField
 
     },
     getSportfields: function () {
@@ -100,7 +105,7 @@ export default {
     },
     availableBookingTimes: function () {
       let bookingInfo = {
-        sportsFieldId: this.selectedSportsFieldId,
+        fieldId: this.fieldId,
         date: this.date
       }
       this.$http.post("/field-booking", bookingInfo
@@ -110,7 +115,24 @@ export default {
       }).catch(error => {
         console.log(error)
       })
+    },
+    confirmBooking: function () {
+      let bookingConfirmation = {
+        userId: sessionStorage.getItem('userId'),
+        fieldId: this.fieldId,
+        date: this.date,
+
+      }
+
+      this.$http.post("/field-booking/new", bookingConfirmation
+      ).then(response => {
+        this.bookedFields = response.data
+        console.log(response.data)
+      }).catch(error => {
+        console.log(error)
+      })
     }
+
 
   },
   mounted() {
