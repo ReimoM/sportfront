@@ -53,6 +53,7 @@ export default {
     },
     logOut: function () {
       sessionStorage.clear()
+      this.$router.push({name: 'homeRoute'})
     }
 
   }
