@@ -12,11 +12,15 @@
           <div class="form-group">
             <input type="text" v-model="locations.county" class="form-control" placeholder="Asukoht">
           </div>
+          <br>
           <button v-on:click="addNewLocation" type="submit" class="btn btn-success">Lisa asukoht</button>
           <br>
           <br>
         </div>
       </div>
+    </div>
+    <div>
+      <button v-on:click="logOut" class="btn btn-danger" type="submit">Logi välja</button>
     </div>
   </div>
 </template>
@@ -47,6 +51,9 @@ export default {
         console.log(error)
       })
     },
+    logOut: function () {
+      sessionStorage.clear()
+    }
 
   }
 }
