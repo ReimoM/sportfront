@@ -1,55 +1,55 @@
 <template>
-  <div >
-    <div>
-      <h1>Siia tuleb väljaku broneerimine</h1>
-      <form >
-        <div class="form-row align-items-centre">
-          <div class="col-3 my-1 mx-auto">
-            <label class="mr-sm-2 sr-only" >Preference</label>
-            <select v-model="selectedFieldId" v-on:change="getNewSportFields" class="custom-select mr-sm-2"  >
-              <option value="0"  selected>Vali väljak</option>
-              <option v-for="field in fields" :value="field.id">{{field.name}}</option>
-            </select>
-          </div>
-        </div>
-      </form>
-      <br>
-      <form>
-        <div class="form-row align-items-center">
-          <div class="col-3 my-1 mx-auto">
-            <label class="mr-sm-2 sr-only"  >Preference</label>
-            <select v-model="selectedSportsFieldId"   class="custom-select mr-sm-2">
-              <option value="0">Vali spordiala</option>
-              <option v-for="sportField in sportFields" :value="sportField.id" >{{ sportField.sportsSportsType }}</option>
-            </select>
-          </div>
-        </div>
-      </form>
-      <br>
-      <form>
+  <div>
+
+    <h1>Siia tuleb väljaku broneerimine</h1>
+    <form>
+      <div class="form-row align-items-centre">
         <div class="col-3 my-1 mx-auto">
-          <label class="mr-sm-2 sr-only" >Preference</label>
-          <input v-model="date" type="date" name="" id="">
-        </div>
-      </form>
-      <br>
-      <button type="submit" class="btn btn-primary" v-on:click="availableBookingTimes">Näita kellaaegu valitud kuupäeval</button>
-    </div>
-    <br>
-    <div class="form-row align-items-centre">
-      <div class="col-3 my-1 mx-auto">
-        <label class="mr-sm-2 sr-only" >Preference</label>
-        <select v-model="availableTimesForField" class="custom-select mr-sm-2"  >
-          <option value="0" selected>Vali kellaaeg</option>
-          <option v-for="availableTime in availableTimes" :value="availableTime.timeSlotInfo">{{availableTime.timeSlotInfo}}</option>
-        </select>
-        <br>
-        <br>
-        <div>
-          <button type="submit" class="btn btn-success" v-on:click="confirmBooking">Kinnita broneering</button>
+          <label class="mr-sm-2 sr-only">Preference</label>
+          <select v-model="selectedFieldId" v-on:change="getNewSportFields" class="custom-select mr-sm-2">
+            <option value="0" selected>Vali väljak</option>
+            <option v-for="field in fields" :value="field.id">{{ field.name }}</option>
+          </select>
         </div>
       </div>
-    </div>
+    </form>
+    <br>
+    <form>
+      <div class="form-row align-items-center">
+        <div class="col-3 my-1 mx-auto">
+          <label class="mr-sm-2 sr-only">Preference</label>
+          <select v-model="selectedSportsFieldId" class="custom-select mr-sm-2">
+            <option value="0">Vali spordiala</option>
+            <option v-for="sportField in sportFields" :value="sportField.id">{{ sportField.sportsSportsType }}</option>
+          </select>
+        </div>
+      </div>
+    </form>
+    <br>
+    <form>
+      <div class="col-3 my-1 mx-auto">
+        <label class="mr-sm-2 sr-only">Preference</label>
+        <input v-model="date" type="date" name="" id="">
+      </div>
+    </form>
+    <br>
+    <button type="submit" class="btn btn-primary" v-on:click="availableBookingTimes">Näita kellaaegu valitud kuupäeval
+    </button>
+    <form>
+      <br>
+      <br>
+      <div class="form-row align-items-center">
+        <div class="col-3 my-1 mx-auto">
+          <label class="mr-sm-2 sr-only">Preference</label>
+          <select v-model="availableTimesForField" class="custom-select mr-sm-2">
+            <option value="0">Vali kellaaeg</option>
+            <option v-for="availableTime in availableTimes" :value="availableTime.timeSlotInfo">{{ availableTime.timeSlotInfo }}</option>
+          </select>
+        </div>
+      </div>
+    </form>
+
+
   </div>
 </template>
 
@@ -70,7 +70,7 @@ export default {
     }
 
   },
-  methods:{
+  methods: {
     getAllFields: function () {
       this.$http.get("/field/all")
           .then(response => {
@@ -105,7 +105,7 @@ export default {
       }
       this.$http.post("/field-booking", bookingInfo
       ).then(response => {
-        this.availableTimes =response.data
+        this.availableTimes = response.data
         console.log(response.data)
       }).catch(error => {
         console.log(error)
@@ -116,13 +116,13 @@ export default {
   mounted() {
     this.getAllFields();
     this.getSportfields();
-    this.availableBookingTimes()
+    // this.availableBookingTimes()
 
   }
 }
 </script>
 
-<style scoped >
+<style scoped>
 
 
 </style>
