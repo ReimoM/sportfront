@@ -33,12 +33,19 @@
           </tbody>
 
         </table>
-      </div>
+
     <br>
     <button type="submit" v-on:click="logOut" class="btn btn-outline-danger m-3">Logi välja</button>
     </div>
 
+
+
+    </div>
+
+
   </div>
+
+
 
 </template>
 
@@ -53,6 +60,7 @@ export default {
       booking: {},
       tableDivDisplay: false,
       newUserDisplay: false
+
     }
 
   },
@@ -96,6 +104,9 @@ export default {
     displayTableDiv: function () {
       this.tableDivDisplay = true;
     }
+
+
+
   },
 
   mounted() {
@@ -103,6 +114,7 @@ export default {
   }
 
 }
+
 
 </script>
 
