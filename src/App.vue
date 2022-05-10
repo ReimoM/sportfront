@@ -8,10 +8,10 @@
       <button :title="getUserId() ? 'Olete sisseloginud' : 'Logi sisse'" :disabled="getUserId() > 0"
               @click="$router.push({name: 'loginRoute'})" class="btn btn-outline-primary">Sisselogimine
       </button>
-      <button :title="getUserId() ? '' : 'Logi sisse'" :disabled="!getUserId() || getUserId() > 1"
+      <button :title="getUserId() ? '' : 'Logi sisse'" :disabled="!getUserId() || getRoleId() > 1"
               @click="$router.push('user')" class="btn btn-outline-primary">Kasutaja
       </button>
-      <button :title="getUserId() ? '' : 'Logi sisse admini kasutajaga'" :disabled="getUserId() < 2 || !getUserId() "
+      <button :title="getUserId() ? '' : 'Logi sisse admini kasutajaga'" :disabled="getRoleId() < 2 || !getUserId() "
               @click="$router.push('admin')" class="btn btn-outline-primary">Admin
       </button>
     </nav>
@@ -23,6 +23,9 @@ export default {
   methods: {
     getUserId: function () {
       return sessionStorage.getItem('userId')
+    },
+    getRoleId: function () {
+      return sessionStorage.getItem('roleId')
 
     }
   }

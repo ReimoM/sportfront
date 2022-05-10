@@ -1,22 +1,22 @@
 <template>
   <div>
 
-    <h1>Siia tuleb väljaku broneerimine</h1>
+    <h3>Alustamiseks valige spordiväljak</h3>
     <div class="form-row align-items-centre">
       <div class="col-3 my-1 mx-auto">
         <label class="mr-sm-2 sr-only">Preference</label>
         <select v-model="selectedFieldId" v-on:change="getNewSportFields" class="custom-select mr-sm-2">
-          <option value="0" selected>Vali väljak</option>
+          <option value="0" disabled selected>Vali väljak</option>
           <option v-for="field in fields" :value="field.id">{{ field.name }}</option>
         </select>
       </div>
     </div>
     <br>
     <div class="form-row align-items-center">
-      <div class="col-3 my-1 mx-auto">
-        <label class="mr-sm-2 sr-only">Preference</label>
-        <select v-model="selectedSportsFieldId" class="custom-select mr-sm-2">
-          <option value="0">Vali spordiala</option>
+      <div aria-placeholder="Vali sporidala" class="col-3 my-1 mx-auto">
+        <label  class="mr-sm-2 sr-only">Preference</label>
+        <select  v-model="selectedSportsFieldId" class="custom-select mr-sm-2">
+          <option value="0" disabled selected>Vali spordiala</option>
           <option v-for="sportField in sportFields" :value="sportField.id">{{ sportField.sportsSportsType }}</option>
         </select>
       </div>
@@ -39,8 +39,7 @@
       </div>
     </div>
     <br>
-    <button :disabled="!getUserId()" type="submit" class="btn btn-primary" v-on:click="confirmBooking">Broneeri</button>
-
+    <button :title="!getUserId() || getRoleId() > 1 ? 'Logi sisse kasutajana' : '' " :disabled="!getUserId() || getRoleId() > 1" type="submit" class="btn btn-primary" v-on:click="confirmBooking">Broneeri</button>
 
   </div>
 </template>
@@ -115,6 +114,7 @@ export default {
     await  this.$http.post("/field-booking/new", bookingConfirmation
       ).then(response => {
         this.bookedFields = response.data
+        this.$router.push('user')
         console.log(response.data)
       }).catch(error => {
         console.log(error)
@@ -122,6 +122,10 @@ export default {
     },
     getUserId: function () {
       return sessionStorage.getItem('userId')
+
+    },
+    getRoleId: function () {
+      return sessionStorage.getItem('roleId')
 
     }
 

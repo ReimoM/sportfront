@@ -87,10 +87,12 @@ export default {
       ).then(response => {
             console.log("START FROM HERE")
             sessionStorage.setItem('userId', response.data.userId)
+            sessionStorage.setItem('roleId', response.data.roleId)
+
             if (response.data.roleId === 1) {
               this.$router.push({name: 'userRoute'})
             } else {
-              this.$router.push({name: 'homeRoute'})
+              this.$router.push({name: 'adminRoute'})
             }
       }).catch(error => {
             this.errorMessage= error.response.data.title +'. '+ error.response.data.detail +'.'
