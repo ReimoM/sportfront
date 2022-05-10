@@ -5,13 +5,15 @@
       <button @click="$router.push('/')" class="btn btn-outline-primary">Pealeht</button>
       <button @click="$router.push('fields')" class="btn btn-outline-primary">Vaata väljakuid</button>
       <button @click="$router.push('booking')" class="btn btn-outline-primary">Broneeri väljak</button>
-      <button :title="getUserId() ? 'Olete sisseloginud' : 'Logi sisse'" :disabled="getUserId() > 0"
+      <button v-if="getUserId() === 0" :title="getUserId() ? 'Olete sisseloginud' : 'Logi sisse'"
+              :disabled="getUserId() > 0"
               @click="$router.push({name: 'loginRoute'})" class="btn btn-outline-primary">Sisselogimine
       </button>
-      <button :title="getUserId() ? '' : 'Logi sisse'" :disabled="!getUserId() || getRoleId() > 1"
+      <button v-if="getRoleId() === 1" :title="getUserId() ? '' : 'Logi sisse'"
+              :disabled="!getUserId() || getRoleId() > 1"
               @click="$router.push('user')" class="btn btn-outline-primary">Kasutaja
       </button>
-      <button :title="getUserId() ? '' : 'Logi sisse admini kasutajaga'" :disabled="getRoleId() < 2 || !getUserId() "
+      <button v-if="getRoleId() === 2" :title="getUserId() ? '' : 'Logi sisse admini kasutajaga'"
               @click="$router.push('admin')" class="btn btn-outline-primary">Admin
       </button>
     </nav>
@@ -22,10 +24,10 @@
 export default {
   methods: {
     getUserId: function () {
-      return sessionStorage.getItem('userId')
+      return Number(sessionStorage.getItem('userId'))
     },
     getRoleId: function () {
-      return sessionStorage.getItem('roleId')
+      return Number(sessionStorage.getItem('roleId'))
 
     }
   }

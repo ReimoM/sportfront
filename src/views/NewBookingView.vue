@@ -14,8 +14,8 @@
     <br>
     <div class="form-row align-items-center">
       <div aria-placeholder="Vali sporidala" class="col-3 my-1 mx-auto">
-        <label  class="mr-sm-2 sr-only">Preference</label>
-        <select  v-model="selectedSportsFieldId" class="custom-select mr-sm-2">
+        <label class="mr-sm-2 sr-only">Preference</label>
+        <select v-model="selectedSportsFieldId" class="custom-select mr-sm-2">
           <option value="0" disabled selected>Vali spordiala</option>
           <option v-for="sportField in sportFields" :value="sportField.id">{{ sportField.sportsSportsType }}</option>
         </select>
@@ -32,14 +32,12 @@
     <br>
     <br>
     <div class="align-items-center">
-      <div  v-for="availableTime in availableTimes" :value="availableTime.id" class="col-3 my-1 mx-auto">
-        <input type="checkbox" id="checkbox" v-model="availableTime.selected" > {{
-          availableTime.timeSlotInfo
-        }}
+      <div v-for="availableTime in availableTimes" :value="availableTime.id" class="col-3 my-1 mx-auto">
+        <input type="checkbox" id="checkbox" v-model="availableTime.selected"> {{ availableTime.timeSlotInfo }}
       </div>
     </div>
     <br>
-    <button :title="!getUserId() || getRoleId() > 1 ? 'Logi sisse kasutajana' : '' " :disabled="!getUserId() || getRoleId() > 1" type="submit" class="btn btn-primary" v-on:click="confirmBooking">Broneeri</button>
+    <button v-if="getRoleId() === 1" type="submit" class="btn btn-primary" v-on:click="confirmBooking">Broneeri</button>
 
   </div>
 </template>
@@ -91,14 +89,14 @@ export default {
     availableBookingTimes: function () {
       let bookingInfo = {
         fieldId: this.fieldId,
-        sportsFieldId: this.selectedSportsFieldId,
+        sportFieldId: this.selectedSportsFieldId,
         date: this.date,
 
       };
       this.$http.post("/field-booking", bookingInfo
       ).then(response => {
         this.availableTimes = response.data;
-        console.log(response.data)
+        console.log(response.data);
       }).catch(error => {
         console.log(error)
       })
@@ -111,7 +109,7 @@ export default {
         timeSlots: this.availableTimes
 
       }
-    await  this.$http.post("/field-booking/new", bookingConfirmation
+      await this.$http.post("/field-booking/new", bookingConfirmation
       ).then(response => {
         this.bookedFields = response.data
         this.$router.push('user')
@@ -125,7 +123,7 @@ export default {
 
     },
     getRoleId: function () {
-      return sessionStorage.getItem('roleId')
+      return Number(sessionStorage.getItem('roleId'))
 
     }
 
