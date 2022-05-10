@@ -103,7 +103,7 @@ export default {
       if (this.newUserInfo.contactFirstName.length === 0) {
         this.messageTitle = "Eesnimi on kohustuslik väli"
       }
-      this.$http.post("/admin/add", this.newUserInfo
+      this.$http.post("/admin/user", this.newUserInfo
       ).then(response => {
         sessionStorage.setItem('userId', response.data.userId)
         this.$router.push({name: 'userRoute'}) //kuidas saab liikuda linkide vahel

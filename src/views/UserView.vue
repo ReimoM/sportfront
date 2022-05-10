@@ -96,7 +96,7 @@ export default {
       this.$router.push({name: 'homeRoute'})
     },
     userData: function () {
-      this.$http.get("/contact/id", {
+      this.$http.get("/id", {
             params: {
               id: this.userId
             }

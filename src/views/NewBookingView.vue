@@ -64,7 +64,7 @@ export default {
   },
   methods: {
     getAllFields: function () {
-      this.$http.get("/field/all")
+      this.$http.get("/fields/all-fields")
           .then(response => {
             this.fields = response.data
             this.selectedFieldId = this.fieldId
@@ -78,7 +78,7 @@ export default {
       this.getSportfields()
     },
     getSportfields: function () {
-      this.$http.get("/sportsfield/fieldId", {params: {fieldId: this.fieldId}}
+      this.$http.get("/fields/sportsfield", {params: {fieldId: this.fieldId}}
       ).then(response => {
         this.sportFields = response.data
         console.log(response.data)

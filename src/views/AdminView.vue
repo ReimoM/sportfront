@@ -42,7 +42,7 @@ export default {
     },
 
     addNewLocation: function () {
-      this.$http.post("/location", this.locations
+      this.$http.post("/admin/location", this.locations
       ).then(response => {
         this.locations = response.data
         this.successMessage = 'Uus asukoht lisatud, maakond: ' + response.data.locations + '.'

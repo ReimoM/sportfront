@@ -40,7 +40,7 @@ export default {
   },
   methods : {
     getAllSportFields: function () {
-      this.$http.get("/field/all")
+      this.$http.get("/fields/all-fields")
           .then(response => {
             this.fields = response.data
             console.log(response.data)
