@@ -116,7 +116,6 @@ export default {
     },
     getNewField: function () {
       this.locationId = this.selectedLocationId
-      this.addNewField()
     },
 
     addNewField: function () {
