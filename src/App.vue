@@ -28,8 +28,7 @@ export default {
     },
     getRoleId: function () {
       return Number(sessionStorage.getItem('roleId'))
-
-    }
+    },
   }
 }
 

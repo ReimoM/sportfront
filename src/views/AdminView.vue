@@ -18,10 +18,11 @@
           <br>
         </div>
       </div>
+      <div >
+        <button v-on:click="logOut" class="btn btn-danger" type="submit">Logi välja</button>
+      </div>
     </div>
-    <div>
-      <button v-on:click="logOut" class="btn btn-danger" type="submit">Logi välja</button>
-    </div>
+
   </div>
 </template>
 
