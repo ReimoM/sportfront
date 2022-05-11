@@ -6,14 +6,14 @@
     </div>
 
     <div class="col-md-3 col-sm-12 mx-auto">
-      <div v-if="adminButtons" class="login-form">
+      <div v-if="adminButtons" >
         <button v-on:click="showNewLocationTable" type="submit" class="btn btn-outline-primary m-3" >Lisa asukoht</button>
         <button v-on:click="showNewFieldTable" type="submit" class="btn btn-outline-primary m-3">Lisa väljak</button>
         <button v-on:click="showNewSportsTable" type="submit" class="btn btn-outline-primary m-3">Lisa spordiala</button>
       </div>
       <br>
       <div>
-        <div v-if="newLocationTableDiv" class="login-form">
+        <div v-if="newLocationTableDiv" >
           <div class="form-group">
             <input type="text" v-model="locations.county" class="form-control" placeholder="Asukoht">
           </div>
@@ -23,29 +23,29 @@
           <br>
         </div>
 
-<!--        <div class="form-row align-items-centre">-->
-<!--          <div class="col-3 my-1 mx-auto">-->
-<!--            <label class="mr-sm-2 sr-only">Preference</label>-->
-<!--            <select v-model="selectedLocationId" v-on:change="getNewSportFields" class="custom-select mr-sm-2">-->
-<!--              <option value="0" disabled selected>Vali asukoht</option>-->
-<!--              <option v-for="location in locations" :value="location.id">{{ field.name }}</option>-->
-<!--            </select>-->
-<!--          </div>-->
-<!--        </div>-->
 
-        <div v-if="newFieldTableDiv" class="login-form">
-          <div class="form-group">
-            <input type="text" v-model="locationId" class="form-control" placeholder="Asukoha ID">
+
+        <div v-if="newFieldTableDiv" >
+<!--          <div class="form-group">-->
+            <div class="form-row align-items-centre">
+              <div class="col-3 my-1 mx-auto">
+                <label class="mr-sm-2 sr-only">Preference</label>
+                <select v-model="selectedLocationId" v-on:change="getNewField" class="custom-select mr-sm-2">
+                  <option value="0" disabled selected>Vali asukoht</option>
+                  <option v-for="location in locations" :value="location.id">{{ location.county }}</option>
+                </select>
+              </div>
+            </div>
             <br>
             <input type="text" v-model="name" class="form-control" placeholder="Spordikeskuse nimi">
-          </div>
+<!--          </div>-->
           <br>
           <button v-on:click="addNewField" type="submit" class="btn btn-success">Lisa spordiklubi</button>
           <br>
           <br>
         </div>
 
-        <div v-if="newSportsTableDiv" class="login-form">
+        <div v-if="newSportsTableDiv" >
           <div class="form-group">
             <input type="text" v-model="sports.sportsType" class="form-control" placeholder="Spordiala">
           </div>
@@ -76,6 +76,7 @@ export default {
       successMessage: '',
       fields: {},
       locationId: '',
+      selectedLocationId: 0,
       name: '',
       isActive: true,
       sports: {}
@@ -113,6 +114,10 @@ export default {
         console.log(error)
       })
     },
+    getNewField: function () {
+      this.locationId = this.selectedLocationId
+      this.addNewField()
+    },
 
     addNewField: function () {
       let newField = {
@@ -124,6 +129,16 @@ export default {
       ).then(response => {
         console.log(response.data)
       }).catch(error => {
+        console.log(error)
+      })
+    },
+    getAllLocations: function () {
+      this.$http.get("/admin/all-locations")
+          .then(response => {
+            this.locations = response.data
+            this.selectedLocationId = this.locationId
+            console.log(response.data)
+          }).catch(error => {
         console.log(error)
       })
     },
@@ -158,6 +173,9 @@ export default {
       })
     },
 
+  },
+  mounted() {
+    this.getAllLocations()
   }
 }
 </script>
