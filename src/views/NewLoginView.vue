@@ -69,7 +69,6 @@ export default {
       messageDescription: '',
       successMessage: '',
       errorMessage: '',
-
     }
   },
   methods: {
