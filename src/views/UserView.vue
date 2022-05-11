@@ -2,9 +2,9 @@
   <div>
 
     <div>
-      <button type="submit" class="btn btn-outline-primary m-3" v-on:click="displayTableDiv">Minu andmed</button>
-      <button type="submit" class="btn btn-outline-primary" v-on:click="hideTableDiv">Minu broneeringud</button>
-      <br>
+    <button type="submit" class="btn btn-outline-primary m-3" v-on:click="displayTableDiv">Minu andmed</button>
+    <button type="submit" class="btn btn-outline-primary" v-on:click="hideTableDiv">Minu broneeringud</button>
+    <br>
 
       <div v-if="tableDivDisplay">
         <table class="table table-hover table-bordered table-striped">
@@ -21,13 +21,14 @@
 
           <tbody>
           <tr class="table-hover table-primary" v-for="booking in bookings">
-            <td>{{ booking.sportsFieldName }}</td>
-            <td>{{ booking.sportsType }}</td>
-            <td>{{ booking.date }}</td>
-            <td>{{ booking.startTimeHour }}</td>
-            <td>{{ booking.endTimeHour }}</td>
+            <td>{{booking.sportsFieldName}}</td>
+            <td>{{booking.sportsType}}</td>
+            <td>{{booking.date}}</td>
+            <td>{{booking.startTimeHour}}</td>
+            <td>{{booking.endTimeHour}}</td>
           </tr>
           </tbody>
+
         </table>
       </div>
 
@@ -46,21 +47,30 @@
 
           <tbody>
           <tr class="table-hover table-primary">
-            <td>{{ contacts.firstName }}</td>
-            <td>{{ contacts.lastName }}</td>
-            <td>{{ contacts.telephone }}</td>
-            <td>{{ contacts.email }}</td>
+            <td>{{contacts.firstName}}</td>
+            <td>{{contacts.lastName}}</td>
+            <td>{{contacts.telephone}}</td>
+            <td>{{contacts.email}}</td>
 
           </tr>
           </tbody>
+
         </table>
       </div>
-      <br>
+
+    <br>
       <div>
-        <button type="submit" v-on:click="logOut" class="btn btn-danger m-3">Logi välja</button>
-      </div>
+    <button type="submit" v-on:click="logOut" class="btn btn-outline-danger m-3">Logi välja</button>
     </div>
+
+
+
+    </div>
+
+
   </div>
+
+
 
 </template>
 
@@ -123,6 +133,7 @@ export default {
       this.contactDisplay = true
 
     }
+
 
 
   },
