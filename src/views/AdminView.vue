@@ -6,7 +6,7 @@
     </div>
 
     <div class="col-md-6 col-sm-12 mx-auto">
-      <div v-if="adminButtons" >
+      <div v-if="adminButtons" class="login-form">
         <button v-on:click="showNewLocationTable" type="submit" class="btn btn-outline-primary" >Lisa asukoht</button>
         <button v-on:click="showNewFieldTable" type="submit" class="btn btn-outline-primary ">Lisa spordiklubi</button>
         <button v-on:click="showNewSportsTable" type="submit" class="btn btn-outline-primary ">Lisa spordiala</button>
@@ -15,7 +15,7 @@
       </div>
       <br>
       <div>
-        <div v-if="newLocationTableDiv" >
+        <div v-if="newLocationTableDiv" class="login-form" >
           <div class="form-group">
             <input type="text" v-model="locations.county" class="form-control" placeholder="Asukoht">
           </div>
@@ -69,7 +69,7 @@
               <label class="mr-sm-2 sr-only">Preference</label>
               <select v-model="selectedFieldId" v-on:change="getNewFieldId" class="custom-select mr-sm-2">
                 <option value="0" disabled selected>Vali väljak</option>
-                <option v-for="field in fields" :value="field.fieldId">{{ field.name }}</option>
+                <option v-for="field in fields" :value="field.id">{{ field.name }}</option>
               </select>
             </div>
           </div>
@@ -78,23 +78,23 @@
           <br>
           <br>
         </div>
-<!--        <div v-if="newAvailabilityDiv" >-->
-<!--          <div class="form-row align-items-centre">-->
-<!--            <div class="col-3 my-1 mx-auto">-->
-<!--              <label class="mr-sm-2 sr-only">Preference</label>-->
-<!--              <select v-model="selectedLocationId" v-on:change="getNewField" class="custom-select mr-sm-2">-->
-<!--                <option value="0" disabled selected>Vali asukoht</option>-->
-<!--                <option v-for="location in locations" :value="location.id">{{ location.county }}</option>-->
-<!--              </select>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--          <br>-->
-<!--          <input type="text" v-model="name" class="form-control" placeholder="Spordikeskuse nimi">-->
-<!--          <br>-->
-<!--          <button v-on:click="addNewField" type="submit" class="btn btn-success">Lisa lahtiolekuaeg</button>-->
-<!--          <br>-->
-<!--          <br>-->
-<!--        </div>-->
+        <div v-if="newAvailabilityDiv" >
+          <div class="form-row align-items-centre">
+            <div class="col-3 my-1 mx-auto">
+              <label class="mr-sm-2 sr-only">Preference</label>
+              <select v-model="selectedLocationId" v-on:change="getNewField" class="custom-select mr-sm-2">
+                <option value="0" disabled selected>Vali asukoht</option>
+                <option v-for="location in locations" :value="location.id">{{ location.county }}</option>
+              </select>
+            </div>
+          </div>
+          <br>
+          <input type="text" v-model="name" class="form-control" placeholder="Spordikeskuse nimi">
+          <br>
+          <button v-on:click="addNewField" type="submit" class="btn btn-success">Lisa lahtiolekuaeg</button>
+          <br>
+          <br>
+        </div>
       </div>
       <div >
         <button v-on:click="logOut" class="btn btn-danger" type="submit">Logi välja</button>
@@ -128,7 +128,6 @@ export default {
       selectedFieldId: 0,
       sportsId: '',
       selectedSportsId: 0
-
 
     }
   },
@@ -233,19 +232,27 @@ export default {
         console.log(error)
       })
     },
-    getNewFieldId: function () {
-      this.fieldId= this.selectedFieldId
-      this.getAllSportFields()
-    },
     addNewSportToField: function () {
-      let sportField = {
-        sportsId: this.sportsId,
-        fieldId: this.fieldId,
+      let sportsFields = {
+        sportsId: this.sportsId.id,
+        fieldId: this.fieldId.id,
 
       }
-      this.$http.post("//fields/new-sportsfield", sportField
+      this.$http.post("/fields/new-sportsfield", sportsFields
       ).then(response => {
-        this.sportsField = response.data
+        console.log(response.data)
+      }).catch(error => {
+        console.log(error)
+      })
+    },
+    getSportsId: function () {
+      this.$http.get("/admin/sports-id", {
+            params: {
+              id: this.sportsId
+            }
+          }
+      ).then(response => {
+        this.sportsId = response.data
         console.log(response.data)
       }).catch(error => {
         console.log(error)
@@ -263,13 +270,31 @@ export default {
     },
     getNewSportsId: function () {
       this.sportsId = this.selectedSportsId
-      this.getAllSports()
-
-    }
+      this.getSportsId()
+    },
+    getFieldById: function () {
+      this.$http.get("/fields/field-id", {
+            params: {
+              id: this.fieldId
+            }
+          }
+      ).then(response => {
+        this.fieldId = response.data
+        console.log(response.data)
+      }).catch(error => {
+        console.log(error)
+      })
+    },
+    getNewFieldId: function () {
+      this.fieldId= this.selectedFieldId
+      this.getFieldById()
+    },
 
   },
   mounted() {
     this.getAllLocations()
+    this.getSportsId()
+    this.getFieldById()
     this.getAllSportFields()
     this.getAllSports()
   }
