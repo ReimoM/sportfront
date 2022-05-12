@@ -15,7 +15,7 @@
       </div>
       <br>
       <div>
-        <div v-if="newLocationTableDiv" class="login-form" >
+        <div v-if="newLocationTableDiv" class="login-form">
           <div class="form-group">
             <input type="text" v-model="locations.county" class="form-control" placeholder="Asukoht">
           </div>
@@ -31,7 +31,7 @@
                 <label class="mr-sm-2 sr-only">Preference</label>
                 <select v-model="selectedLocationId" v-on:change="getNewFieldLocation" class="custom-select mr-sm-2">
                   <option value="0" disabled selected>Vali asukoht</option>
-                  <option v-for="location in locations" :value="location.id">{{ location.county }}</option>
+                  <option v-for="location in allLocations" :value="location.id">{{ location.county }}</option>
                 </select>
               </div>
             </div>
@@ -110,6 +110,7 @@ export default {
   data: function () {
     return {
       locations: {},
+      allLocations: {},
       newLocationTableDiv: false,
       newFieldTableDiv: false,
       newSportsTableDiv: false,
@@ -174,7 +175,6 @@ export default {
         this.locations = response.data
         this.successMessage = 'Uus asukoht lisatud, maakond: ' + response.data.county + '.'
         this.newLocationTableDiv = false
-        this.$router.push({name: 'adminRoute'})
       }).catch(error => {
         console.log(error)
       })
@@ -199,7 +199,7 @@ export default {
     getAllLocations: function () {
       this.$http.get("/admin/all-locations")
           .then(response => {
-            this.locations = response.data
+            this.allLocations = response.data
             this.selectedLocationId = this.locationId
             console.log(response.data)
           }).catch(error => {
