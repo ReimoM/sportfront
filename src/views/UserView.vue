@@ -56,11 +56,43 @@
           </tbody>
 
         </table>
+        <br>
+        <br>
+
+
+
+
+
+
+        <button type="submit" v-on:click="hideAllTables" class="btn btn-outline-primary m-3">Muuda andmeid</button>
+
+        <div class="col-md-3 col-sm-12 mx-auto">
+
+          <div class="form-group">
+            <input type="text" v-model="newUserInfo.firstName" class="form-control" placeholder="Eesnimi">
+          </div>
+          <div class="form-group">
+            <input type="text" v-model="newUserInfo.lastName" class="form-control" placeholder="Perekonnanimi">
+          </div>
+          <div class="form-group">
+            <input type="text" v-model="newUserInfo.telephone" class="form-control" placeholder="Telefon">
+          </div>
+          <div class="form-group">
+            <input type="text" v-model="newUserInfo.email" class="form-control" placeholder="E-mail">
+          </div>
+
+
+          <br>
+          <button v-on:click="updateUser" type="submit" class="btn btn-success">Uuenda andmed</button>
+        </div>
+
+
       </div>
 
     <br>
       <div>
     <button type="submit" v-on:click="logOut" class="btn btn-outline-danger m-3">Logi välja</button>
+
     </div>
 
 
@@ -83,12 +115,15 @@ export default {
       contacts: {},
       bookings: [],
       booking: {},
+      newUserInfo: {},
       tableDivDisplay: false,
       contactDisplay: false
 
     }
 
   },
+
+
   methods: {
     logOut: function () {
       sessionStorage.clear()
@@ -122,6 +157,21 @@ export default {
       })
     },
 
+    updateUser: function () {
+      this.$http.put("/id", this.newUserInfo, {
+        params: {
+          userId: this.userId
+        }
+      }
+      ).then(response => {
+        this.$router.push('user')
+        console.log(response.data)
+
+      }).catch(error => {
+        console.log(error)
+      })
+    },
+
     hideTableDiv: function () {
       this.tableDivDisplay = true
       this.contactDisplay = false
@@ -131,6 +181,12 @@ export default {
     displayTableDiv: function () {
       this.tableDivDisplay = false
       this.contactDisplay = true
+
+    },
+
+    hideAllTables: function () {
+      this.tableDivDisplay = false
+      this.contactDisplay = false
 
     }
 
