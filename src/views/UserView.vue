@@ -1,8 +1,12 @@
 <template>
   <div>
 
+    <div v-if="successMessage.length > 0"class="alert alert-success" role="alert">
+      {{successMessage}}
+    </div>
+
     <div>
-    <button type="submit" class="btn btn-outline-primary m-3" v-on:click="displayTableDiv">Minu andmed</button>
+    <button type="submit" class="btn btn-outline-primary m-3" v-on:click="displayTableDiv(), showButton()">Minu andmed</button>
     <button type="submit" class="btn btn-outline-primary" v-on:click="hideTableDiv">Minu broneeringud</button>
     <br>
 
@@ -59,14 +63,13 @@
         <br>
         <br>
 
+        <div v-if="buttonDisplay">
+          <button type="submit" v-on:click="hideAllTables(), showSubmissionForm(), hideButton()" class="btn btn-outline-primary m-3">Muuda andmeid</button>
+        </div>
 
 
 
-
-
-        <button type="submit" v-on:click="hideAllTables" class="btn btn-outline-primary m-3">Muuda andmeid</button>
-
-        <div class="col-md-3 col-sm-12 mx-auto">
+        <div class="col-md-3 col-sm-12 mx-auto" v-if="formDisplay">
 
           <div class="form-group">
             <input type="text" v-model="newUserInfo.firstName" class="form-control" placeholder="Eesnimi">
@@ -83,7 +86,7 @@
 
 
           <br>
-          <button v-on:click="updateUser" type="submit" class="btn btn-success">Uuenda andmed</button>
+          <button v-on:click="updateUser(); hideSubmissionForm()" type="submit" class="btn btn-success">Uuenda andmed</button>
         </div>
 
 
@@ -94,12 +97,7 @@
     <button type="submit" v-on:click="logOut" class="btn btn-outline-danger m-3">Logi välja</button>
 
     </div>
-
-
-
     </div>
-
-
   </div>
 
 
@@ -117,7 +115,11 @@ export default {
       booking: {},
       newUserInfo: {},
       tableDivDisplay: false,
-      contactDisplay: false
+      contactDisplay: false,
+      formDisplay: false,
+      buttonDisplay: true,
+      successMessage: '',
+      message: false
 
     }
 
@@ -164,7 +166,8 @@ export default {
         }
       }
       ).then(response => {
-        this.$router.push('user')
+        this.successMessage = 'Kontaktandmed on uuendatud'
+        this.userData()
         console.log(response.data)
 
       }).catch(error => {
@@ -188,9 +191,27 @@ export default {
       this.tableDivDisplay = false
       this.contactDisplay = false
 
-    }
+    },
 
+    hideSubmissionForm: function () {
+      this.formDisplay = false
+      this.buttonDisplay = false
+      this.contactDisplay = false
+    },
 
+    showSubmissionForm: function () {
+      this.formDisplay = true
+      this.buttonDisplay = true
+      this.contactDisplay = true
+    },
+
+    hideButton: function () {
+      this.buttonDisplay = false
+    },
+
+    showButton: function () {
+      this.buttonDisplay = true
+    },
 
   },
 
