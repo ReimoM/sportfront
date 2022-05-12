@@ -1,17 +1,21 @@
 <template>
   <div>
 
-    <div v-if="successMessage.length > 0"class="alert alert-primary" role="alert">
-      {{successMessage}}
+    <div v-if="successMessage.length > 0" class="alert alert-primary" role="alert">
+      {{ successMessage }}
     </div>
 
     <div class="col-md-6 col-sm-12 mx-auto">
       <div v-if="adminButtons" class="login-form">
-        <button v-on:click="showNewLocationTable" type="submit" class="btn btn-outline-primary" >Lisa asukoht</button>
+        <button v-on:click="showNewLocationTable" type="submit" class="btn btn-outline-primary">Lisa asukoht</button>
         <button v-on:click="showNewFieldTable" type="submit" class="btn btn-outline-primary ">Lisa spordiklubi</button>
         <button v-on:click="showNewSportsTable" type="submit" class="btn btn-outline-primary ">Lisa spordiala</button>
-        <button v-on:click="showNewSportToFieldTable" type="submit" class="btn btn-outline-primary ">Lisa spordiklubi alad</button>
-        <button v-on:click="showFieldAvailabilityTable" type="submit" class="btn btn-outline-primary ">Lisa spordiväljaku lahtiolekuaeg</button>
+        <button v-on:click="showNewSportToFieldTable" type="submit" class="btn btn-outline-primary ">Lisa spordiklubi
+          alad
+        </button>
+        <button v-on:click="showFieldAvailabilityTable" type="submit" class="btn btn-outline-primary ">Lisa
+          spordiväljaku lahtiolekuaeg
+        </button>
       </div>
       <br>
       <div>
@@ -25,25 +29,25 @@
           <br>
         </div>
 
-        <div v-if="newFieldTableDiv" >
-            <div class="form-row align-items-centre">
-              <div class="col-3 my-1 mx-auto">
-                <label class="mr-sm-2 sr-only">Preference</label>
-                <select v-model="selectedLocationId" v-on:change="getNewFieldLocation" class="custom-select mr-sm-2">
-                  <option value="0" disabled selected>Vali asukoht</option>
-                  <option v-for="location in allLocations" :value="location.id">{{ location.county }}</option>
-                </select>
-              </div>
+        <div v-if="newFieldTableDiv">
+          <div class="form-row align-items-centre">
+            <div class="col-3 my-1 mx-auto">
+              <label class="mr-sm-2 sr-only">Preference</label>
+              <select v-model="selectedLocationId" v-on:change="getNewFieldLocation" class="custom-select mr-sm-2">
+                <option value="0" disabled selected>Vali asukoht</option>
+                <option v-for="location in allLocations" :value="location.id">{{ location.county }}</option>
+              </select>
             </div>
-            <br>
-            <input type="text" v-model="name" class="form-control" placeholder="Spordikeskuse nimi">
+          </div>
+          <br>
+          <input type="text" v-model="name" class="form-control" placeholder="Spordikeskuse nimi">
           <br>
           <button v-on:click="addNewField" type="submit" class="btn btn-success">Lisa spordiklubi</button>
           <br>
           <br>
         </div>
 
-        <div v-if="newSportsTableDiv" >
+        <div v-if="newSportsTableDiv">
           <div class="form-group">
             <input type="text" v-model="sports.sportsType" class="form-control" placeholder="Spordiala">
           </div>
@@ -53,7 +57,7 @@
           <br>
         </div>
 
-        <div v-if="newSportToFieldDiv" >
+        <div v-if="newSportToFieldDiv">
           <div class="form-row align-items-centre">
             <div class="col-3 my-1 mx-auto">
               <label class="mr-sm-2 sr-only">Preference</label>
@@ -78,7 +82,7 @@
           <br>
           <br>
         </div>
-        <div v-if="newAvailabilityDiv" >
+        <div v-if="newAvailabilityDiv">
           <div class="form-row align-items-centre">
             <div class="col-3 my-1 mx-auto">
               <label class="mr-sm-2 sr-only">Preference</label>
@@ -96,7 +100,7 @@
           <br>
         </div>
       </div>
-      <div >
+      <div>
         <button v-on:click="logOut" class="btn btn-danger" type="submit">Logi välja</button>
       </div>
     </div>
@@ -233,12 +237,13 @@ export default {
       })
     },
     addNewSportToField: function () {
-      let sportsFields = {
-        sportsId: this.sportsId.id,
-        fieldId: this.fieldId.id,
 
-      }
-      this.$http.post("/fields/new-sportsfield", sportsFields
+      this.$http.post("/fields/new-sportsfield", {}, {
+            params: {
+              sportsId: this.sportsId.id,
+              fieldId: this.fieldId.id
+            }
+          }
       ).then(response => {
         console.log(response.data)
       }).catch(error => {
@@ -261,7 +266,7 @@ export default {
     getAllSports: function () {
       this.$http.get("/admin/all-sports")
           .then(response => {
-            this.sports= response.data
+            this.sports = response.data
             this.selectedSportsId = this.sportsId
             console.log(response.data)
           }).catch(error => {
@@ -286,7 +291,7 @@ export default {
       })
     },
     getNewFieldId: function () {
-      this.fieldId= this.selectedFieldId
+      this.fieldId = this.selectedFieldId
       this.getFieldById()
     },
 
