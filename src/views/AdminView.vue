@@ -86,10 +86,22 @@
           <div class="form-row align-items-centre">
             <div class="col-3 my-1 mx-auto">
               <label class="mr-sm-2 sr-only">Preference</label>
-              <select v-model="selectedLocationId" v-on:change="getNewField" class="custom-select mr-sm-2">
+              <select v-model="selectedFieldId" v-on:change="getNewFieldId" class="custom-select mr-sm-2">
                 <option value="0" disabled selected>Vali asukoht</option>
-                <option v-for="location in locations" :value="location.id">{{ location.county }}</option>
+                <option v-for="field in fields" :value="field.id">{{ field.name }}</option>
               </select>
+            </div>
+          </div>
+          <div class="form-row align-items-centre">
+            <div class="col-3 my-1 mx-auto">
+              <label class="mr-sm-2 sr-only">Preference</label>
+              <input v-model="weekdays" type="date">
+            </div>
+          </div>
+          <div class="form-row align-items-centre">
+            <div class="col-3 my-1 mx-auto">
+              <label class="mr-sm-2 sr-only">Preference</label>
+              <input v-model="startTimeHour" type="text">
             </div>
           </div>
           <br>
@@ -111,6 +123,8 @@
 <script>
 export default {
   name: "AdminView",
+  components: {},
+
   data: function () {
     return {
       locations: {},
@@ -132,7 +146,8 @@ export default {
       fieldId: '',
       selectedFieldId: 0,
       sportsId: '',
-      selectedSportsId: 0
+      selectedSportsId: 0,
+      weekdays: {}
 
     }
   },
