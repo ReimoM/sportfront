@@ -20,6 +20,7 @@
             <th scope="col">Kuupäev</th>
             <th scope="col">Broneeringu algus</th>
             <th scope="col">Broneeringu lõpp</th>
+            <th scope="col">Broneeringu eemaldamine</th>
           </tr>
           </thead>
 
@@ -30,6 +31,7 @@
             <td>{{booking.date}}</td>
             <td>{{booking.startTimeHour}}</td>
             <td>{{booking.endTimeHour}}</td>
+            <td><button  type="button" class="btn btn-danger" v-on:click="deleteBooking">Eemalda broneering</button></td>
           </tr>
           </tbody>
 
@@ -119,13 +121,13 @@ export default {
       formDisplay: false,
       buttonDisplay: true,
       successMessage: '',
-      message: false
+      message: false,
+      fieldBookingId: {},
+
 
     }
 
   },
-
-
   methods: {
     logOut: function () {
       sessionStorage.clear()
@@ -170,6 +172,17 @@ export default {
         this.userData()
         console.log(response.data)
 
+      }).catch(error => {
+        console.log(error)
+      })
+    },
+    deleteBooking: function () {
+      this.$http.delete("/field-booking/id", {
+        params: {
+          fieldBookingId: this.fieldBookingId
+        }
+      }).then(response => {
+        console.log(response.data)
       }).catch(error => {
         console.log(error)
       })
