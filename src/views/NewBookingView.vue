@@ -58,7 +58,6 @@ export default {
       date: {},
       bookedFields: {},
       timeSlot: {},
-
     }
 
   },
@@ -118,21 +117,15 @@ export default {
         console.log(error)
       })
     },
-    getUserId: function () {
-      return sessionStorage.getItem('userId')
-
-    },
     getRoleId: function () {
       return Number(sessionStorage.getItem('roleId'))
 
     }
 
-
   },
   mounted() {
     this.getAllFields();
     this.getSportfields();
-    // this.availableBookingTimes()
 
   }
 }
