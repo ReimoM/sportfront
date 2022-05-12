@@ -67,7 +67,7 @@
 
         <button type="submit" v-on:click="hideAllTables" class="btn btn-outline-primary m-3">Muuda andmeid</button>
 
-        <div>
+        <div class="col-md-3 col-sm-12 mx-auto">
 
           <div class="form-group">
             <input type="text" v-model="newUserInfo.firstName" class="form-control" placeholder="Eesnimi">
@@ -123,6 +123,8 @@ export default {
     }
 
   },
+
+
   methods: {
     logOut: function () {
       sessionStorage.clear()
@@ -157,14 +159,15 @@ export default {
     },
 
     updateUser: function () {
-      this.$http.post("/id", this.newUserInfo, {
+      this.$http.put("/id", this.newUserInfo, {
         params: {
-          id: this.userId
+          userId: this.userId
         }
       }
       ).then(response => {
-        this.newUserInfo = response.data
+        this.$router.push('user')
         console.log(response.data)
+
       }).catch(error => {
         console.log(error)
       })
