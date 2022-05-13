@@ -7,9 +7,9 @@
 
     <div class="col-md-6 col-sm-12 mx-auto">
       <div v-if="adminButtons" class="login-form">
-        <button v-on:click="showNewLocationTable" type="submit" class="btn btn-outline-primary">Lisa asukoht</button>
-        <button v-on:click="showNewFieldTable" type="submit" class="btn btn-outline-primary ">Lisa spordiklubi</button>
-        <button v-on:click="showNewSportsTable" type="submit" class="btn btn-outline-primary ">Lisa spordiala</button>
+        <button v-on:click="showNewLocationTable" type="submit" class="btn btn-outline-primary">Maakonnad</button>
+        <button v-on:click="showNewFieldTable" type="submit" class="btn btn-outline-primary ">Spordiklubid</button>
+        <button v-on:click="showNewSportsTable" type="submit" class="btn btn-outline-primary ">Spordialad</button>
         <button v-on:click="showNewSportToFieldTable" type="submit" class="btn btn-outline-primary ">Lisa spordiklubi
           alad
         </button>
@@ -20,11 +20,39 @@
       <br>
       <div>
         <div v-if="newLocationTableDiv" class="login-form">
-          <div class="form-group">
-            <input type="text" v-model="locations.county" class="form-control" placeholder="Asukoht">
+          <div>
+            <table class="table table-hover table-bordered table-striped">
+
+              <thead>
+              <tr class="table-hover table-success">
+                <th scope="col">Maakond</th>
+                <th scope="col">Maakonna eemaldamine</th>
+              </tr>
+              </thead>
+
+              <tbody>
+              <tr class="table-hover table-primary" v-for="location in allLocations">
+                <td>{{ location.county }}</td>
+                <td>
+                  <button type="button" class="btn btn-danger" v-on:click="deleteLocation(location.id)">Eemalda
+                    maakond
+                  </button>
+                </td>
+              </tr>
+              </tbody>
+
+            </table>
           </div>
-          <br>
-          <button v-on:click="addNewLocation" type="submit" class="btn btn-success">Lisa asukoht</button>
+          <div v-if="hideNewLocationBar" class="form-group">
+            <input type="text" v-model="locations.county" class="form-control" placeholder="Maakond">
+          </div>
+          <div v-if="locationRequestButtonDiv">
+            <button v-on:click="addLocationRequest" type="submit" class="btn btn-success">Uue maakonna lisamine</button>
+          </div>
+          <div v-if="addLocationButtonDiv">
+            <button v-on:click="addNewLocation" type="submit" class="btn btn-success">Lisa maakond</button>
+          </div>
+
           <br>
           <br>
         </div>
@@ -116,7 +144,6 @@
         <button v-on:click="logOut" class="btn btn-danger" type="submit">Logi välja</button>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -135,6 +162,9 @@ export default {
       newSportToFieldDiv: false,
       newAvailabilityDiv: false,
       adminButtons: true,
+      hideNewLocationBar: false,
+      locationRequestButtonDiv: true,
+      addLocationButtonDiv: false,
       successMessage: '',
       fields: {},
       locationId: '',
@@ -194,9 +224,32 @@ export default {
         this.locations = response.data
         this.successMessage = 'Uus asukoht lisatud, maakond: ' + response.data.county + '.'
         this.newLocationTableDiv = false
+        this.locationRequestButtonDiv = true
+        this.hideNewLocationBar = false
+        this.addLocationButtonDiv = false
+        this.getAllLocations()
       }).catch(error => {
         console.log(error)
       })
+    },
+    deleteLocation: function (id) {
+      this.$http.delete("/admin/id-location", {
+        params: {
+          id: id
+        }
+      }).then(response => {
+        this.getAllLocations()
+        this.deleteMessage = true
+        console.log(response.data)
+      }).catch(error => {
+        console.log(error)
+      })
+    },
+    addLocationRequest: function () {
+      this.hideNewLocationBar = true
+      this.locationRequestButtonDiv = false
+      this.addLocationButtonDiv = true
+
     },
     getNewFieldLocation: function () {
       this.locationId = this.selectedLocationId
