@@ -34,7 +34,7 @@
             <td>{{booking.date}}</td>
             <td>{{booking.startTimeHour}}</td>
             <td>{{booking.endTimeHour}}</td>
-            <td><button type="button" class="btn btn-danger" v-on:click="deleteBooking(booking.fieldBookingId)">Eemalda broneering</button></td>
+            <td><button type="button" class="btn btn-outline-danger" v-on:click="deleteBooking(booking.fieldBookingId)">Eemalda broneering</button></td>
           </tr>
           </tbody>
 

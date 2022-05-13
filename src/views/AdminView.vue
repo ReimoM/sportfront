@@ -31,7 +31,7 @@
               <tr class="table-hover table-primary" v-for="location in allLocations">
                 <td>{{ location.county }}</td>
                 <td>
-                  <button type="button" class="btn btn-danger" v-on:click="deleteLocation(location.id)">Eemalda
+                  <button type="button" class="btn btn-outline-danger" v-on:click="deleteLocation(location.id)">Eemalda
                     maakond
                   </button>
                 </td>

@@ -13,7 +13,7 @@
     </div>
     <br>
     <div class="form-row align-items-center">
-      <div aria-placeholder="Vali sporidala" class="col-3 my-1 mx-auto">
+      <div class="col-3 my-1 mx-auto">
         <label class="mr-sm-2 sr-only">Preference</label>
         <select v-model="selectedSportsFieldId" class="custom-select mr-sm-2">
           <option value="0" disabled selected>Vali spordiala</option>
