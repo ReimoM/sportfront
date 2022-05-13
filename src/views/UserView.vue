@@ -1,13 +1,16 @@
 <template>
   <div>
 
-    <div v-if="successMessage.length > 0"class="alert alert-success" role="alert">
-      {{successMessage}}
+    <div v-if="successMessage === true"class="alert alert-success" role="alert">
+      {{'Andmed uuendatud'}}
+    </div>
+    <div v-if="deleteMessage === true"class="alert alert-danger" role="alert">
+      {{'Broneering eemaldatud'}}
     </div>
 
     <div>
-    <button type="submit" class="btn btn-outline-primary m-3" v-on:click="displayTableDiv(), showButton()">Minu andmed</button>
-    <button type="submit" class="btn btn-outline-primary" v-on:click="hideTableDiv">Minu broneeringud</button>
+    <button type="submit" class="btn btn-outline-primary m-3" v-on:click="displayTableDiv(), showButton(), hideMessage()">Minu andmed</button>
+    <button type="submit" class="btn btn-outline-primary" v-on:click="hideTableDiv(), hideMessage()">Minu broneeringud</button>
     <br>
 
       <div v-if="tableDivDisplay">
@@ -119,8 +122,8 @@ export default {
       contactDisplay: false,
       formDisplay: false,
       buttonDisplay: true,
-      successMessage: '',
-
+      successMessage: false,
+      deleteMessage: false,
 
     }
 
@@ -143,6 +146,11 @@ export default {
         console.log(error)
       })
     },
+    hideMessage: function () {
+      this.successMessage = false
+      this.deleteMessage = false
+    },
+
 
     getMyBookings: function () {
       this.$http.get("/field-booking/id", {
@@ -165,7 +173,7 @@ export default {
         }
       }
       ).then(response => {
-        this.successMessage = 'Kontaktandmed on uuendatud'
+        this.successMessage = true
         this.userData()
         console.log(response.data)
 
@@ -180,6 +188,7 @@ export default {
         }
       }).then(response => {
         this.getMyBookings()
+        this.deleteMessage= true
         console.log(response.data)
       }).catch(error => {
         console.log(error)
