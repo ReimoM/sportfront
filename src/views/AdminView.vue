@@ -40,12 +40,13 @@
 
             </table>
           </div>
-          <div v-if="hideNewLocationBar" class="form-group">
+          <div v-if="hideNewLocationBar" class="form-group col-4 my-1 mx-auto">
             <input type="text" v-model="locations.county" class="form-control" placeholder="Maakond">
           </div>
           <div v-if="locationRequestButtonDiv">
             <button v-on:click="addLocationRequest" type="submit" class="btn btn-success">Uue maakonna lisamine</button>
           </div>
+          <br>
           <div v-if="addLocationButtonDiv">
             <button v-on:click="addNewLocation() " type="submit" class="btn btn-success">Lisa maakond</button>
           </div>
@@ -74,7 +75,7 @@
               </tr>
               </tbody>
             </table>
-            <div v-if="hideNewLocationBar" class="form-group">
+            <div v-if="hideNewLocationBar" class="form-group col-4 my-1 mx-auto">
               <input v-model="name" type="text" class="form-control" placeholder="Spordikeskuse nimi">
               <br>
               <button v-on:click="addNewField" type="submit" class="btn btn-success">Lisa spordiklubi</button>
@@ -83,7 +84,7 @@
         </div>
 
         <div v-if="newSportsTableDiv" class="login-form">
-          <div class="form-group">
+          <div class="form-group col-4 my-1 mx-auto">
             <input v-model="sports.sportsType" type="text"  class="form-control" placeholder="Spordiala">
           </div>
           <br>
@@ -92,22 +93,22 @@
           <br>
         </div>
 
-        <div v-if="newSportToFieldDiv">
+        <div v-if="newSportToFieldDiv" >
           <div class="form-row align-items-centre">
-            <div class="col-3 my-1 mx-auto">
+            <div class="col-4 my-1 mx-auto">
               <label class="mr-sm-2 sr-only">Preference</label>
-              <select v-model="selectedSportsId" v-on:change="getNewSportsId" class="custom-select mr-sm-2">
-                <option value="0" disabled selected>Vali spordiala</option>
+              <select v-model="selectedSportsId" v-on:change="getNewSportsId" class="custom-select mr-sm-2 ">
+                <option value="0" disabled>Vali spordiala</option>
                 <option v-for="sport in allSports" :value="sport.id">{{ sport.sportsType }}</option>
               </select>
             </div>
           </div>
           <br>
           <div class="form-row align-items-centre">
-            <div class="col-3 my-1 mx-auto">
+            <div class="col-4 my-1 mx-auto">
               <label class="mr-sm-2 sr-only">Preference</label>
               <select v-model="selectedFieldId" v-on:change="getNewFieldId" class="custom-select mr-sm-2">
-                <option value="0" disabled selected>Vali väljak</option>
+                <option value="0" disabled>Vali väljak</option>
                 <option v-for="field in fields" :value="field.id">{{ field.name }}</option>
               </select>
             </div>
@@ -275,6 +276,7 @@ export default {
         this.sports = response.data
         this.successMessage = true
         this.newSportsTableDiv = false
+        this.getAllSports()
       }).catch(error => {
         console.log(error)
       })
