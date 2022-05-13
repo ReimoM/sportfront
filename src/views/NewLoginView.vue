@@ -116,8 +116,8 @@ export default {
         this.$http.post("/admin/user", this.newUserInfo
         ).then(response => {
           sessionStorage.setItem('userId', response.data.userId)
-          this.$router.push({name: 'userRoute'}) //kuidas saab liikuda linkide vahel
-          // this.successMessage = 'Uus kasutaja lisatud, kasutajanimi: ' + response.data.username + '.'
+
+          this.$router.push({name: 'userRoute'})
         }).catch(error => {
           this.errorMessage = error.response.data.title + '. ' + error.response.data.detail + '.'
         });

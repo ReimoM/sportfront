@@ -37,7 +37,7 @@
       </div>
     </div>
     <br>
-    <button v-if="getRoleId() === 1" type="submit" class="btn btn-primary" v-on:click="confirmBooking">Broneeri</button>
+    <button v-if="getRoleId() === 1 || getUserId() !== 0" type="submit" class="btn btn-primary" v-on:click="confirmBooking">Broneeri</button>
 
   </div>
 </template>
@@ -120,7 +120,10 @@ export default {
     getRoleId: function () {
       return Number(sessionStorage.getItem('roleId'))
 
-    }
+    },
+    getUserId: function () {
+      return Number(sessionStorage.getItem('userId'))
+    },
 
   },
   mounted() {
