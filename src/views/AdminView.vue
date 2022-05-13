@@ -8,9 +8,9 @@
     <div class="col-md-6 col-sm-12 mx-auto">
       <div v-if="adminButtons" class="login-form">
         <button v-on:click="showNewLocationTable(), hideMessage()" type="submit" class="btn btn-outline-primary">Maakonnad</button>
-        <button v-on:click="showNewFieldTable(), hideMessage()" type="submit" class="btn btn-outline-primary ">Spordiklubid</button>
-        <button v-on:click="showNewSportsTable" type="submit" class="btn btn-outline-primary ">Spordialad</button>
-        <button v-on:click="showNewSportToFieldTable" type="submit" class="btn btn-outline-primary ">Lisa spordiklubi
+        <button v-on:click="showNewFieldTable(), hideMessage()" type="submit" class="btn btn-outline-primary ">Lisa spordiklubi</button>
+        <button v-on:click="showNewSportsTable(), hideMessage()" type="submit" class="btn btn-outline-primary ">Spordialad</button>
+        <button v-on:click="showNewSportToFieldTable(), hideMessage()" type="submit" class="btn btn-outline-primary ">Lisa spordiklubi
           alad
         </button>
       </div>
@@ -60,7 +60,6 @@
 
               <thead>
               <tr class="table-hover table-success">
-                <th scope="col">locationId</th>
                 <th scope="col">Maakond</th>
                 <th scope="col">Spordiklubi lisamine</th>
               </tr>
@@ -68,7 +67,6 @@
 
               <tbody>
               <tr class="table-hover table-primary" v-for="location in allLocations">
-                <td>{{ location.id }}</td>
                 <td>{{ location.county }}</td>
                 <td>
                   <button type="button" class="btn btn-success" v-on:click="addNewFieldRequest(location.id)">Spordiklubi lisamine</button>
@@ -79,7 +77,7 @@
             <div v-if="hideNewLocationBar" class="form-group">
               <input v-model="name" type="text" class="form-control" placeholder="Spordikeskuse nimi">
               <br>
-              <button v-on:click="addNewField(), hideMessage()" type="submit" class="btn btn-success">Lisa spordiklubi</button>
+              <button v-on:click="addNewField" type="submit" class="btn btn-success">Lisa spordiklubi</button>
             </div>
           </div>
         </div>
@@ -245,6 +243,7 @@ export default {
       }
       this.$http.post("/fields", newField
       ).then(response => {
+        this.getAllSportFields()
         this.successMessage = true
         console.log(response.data)
       }).catch(error => {
@@ -273,10 +272,8 @@ export default {
       this.$http.post("/admin/sports", this.sports
       ).then(response => {
         this.sports = response.data
-        this.successMessage = 'Uus spordiala lisatud. Spordiala: ' + response.data.sportsType + '.'
+        this.successMessage = true
         this.newSportsTableDiv = false
-        this.$router.push({name: 'adminRoute'})
-
       }).catch(error => {
         console.log(error)
       })
@@ -300,6 +297,7 @@ export default {
             }
           }
       ).then(response => {
+        this.successMessage= true
         console.log(response.data)
       }).catch(error => {
         console.log(error)
