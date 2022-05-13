@@ -118,7 +118,7 @@ export default {
         ).then(response => {
           this.newUserInfo = response.data
           // sessionStorage.setItem('userId', response.data.userId)
-          this.successMessage= 'Kasutaja loodud, jätkamiseks logige sisse'
+          this.successMessage= 'Kasutaja ' + '"' + this.newUserInfo.username + '"' +  ' loodud, jätkamiseks logige sisse'
           this.displayTableDiv()
           // this.$router.push({name: 'loginRoute'})
         }).catch(error => {
