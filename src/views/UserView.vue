@@ -31,7 +31,7 @@
             <td>{{booking.date}}</td>
             <td>{{booking.startTimeHour}}</td>
             <td>{{booking.endTimeHour}}</td>
-            <td><button  type="button" class="btn btn-danger" v-on:click="deleteBooking">Eemalda broneering</button></td>
+            <td><button type="button" class="btn btn-danger" v-on:click="deleteBooking(booking.fieldBookingId)">Eemalda broneering</button></td>
           </tr>
           </tbody>
 
@@ -62,7 +62,6 @@
           </tbody>
 
         </table>
-        <br>
         <br>
 
         <div v-if="buttonDisplay">
@@ -121,8 +120,6 @@ export default {
       formDisplay: false,
       buttonDisplay: true,
       successMessage: '',
-      message: false,
-      fieldBookingId: {},
 
 
     }
@@ -176,12 +173,13 @@ export default {
         console.log(error)
       })
     },
-    deleteBooking: function () {
+    deleteBooking: function (fieldBookingId) {
       this.$http.delete("/field-booking/id", {
         params: {
-          fieldBookingId: this.fieldBookingId
+          id: fieldBookingId
         }
       }).then(response => {
+        this.getMyBookings()
         console.log(response.data)
       }).catch(error => {
         console.log(error)
