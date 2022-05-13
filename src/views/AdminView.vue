@@ -1,20 +1,17 @@
 <template>
   <div>
 
-    <div v-if="successMessage.length > 0" class="alert alert-primary" role="alert">
-      {{ successMessage }}
+    <div v-if="successMessage === true"class="alert alert-success" role="alert">
+      {{'Andmed uuendatud'}}
     </div>
 
     <div class="col-md-6 col-sm-12 mx-auto">
       <div v-if="adminButtons" class="login-form">
-        <button v-on:click="showNewLocationTable" type="submit" class="btn btn-outline-primary">Maakonnad</button>
-        <button v-on:click="showNewFieldTable" type="submit" class="btn btn-outline-primary ">Spordiklubid</button>
+        <button v-on:click="showNewLocationTable(), hideMessage()" type="submit" class="btn btn-outline-primary">Maakonnad</button>
+        <button v-on:click="showNewFieldTable(), hideMessage()" type="submit" class="btn btn-outline-primary ">Spordiklubid</button>
         <button v-on:click="showNewSportsTable" type="submit" class="btn btn-outline-primary ">Spordialad</button>
         <button v-on:click="showNewSportToFieldTable" type="submit" class="btn btn-outline-primary ">Lisa spordiklubi
           alad
-        </button>
-        <button v-on:click="showFieldAvailabilityTable" type="submit" class="btn btn-outline-primary ">Lisa
-          spordiväljaku lahtiolekuaeg
         </button>
       </div>
       <br>
@@ -50,7 +47,7 @@
             <button v-on:click="addLocationRequest" type="submit" class="btn btn-success">Uue maakonna lisamine</button>
           </div>
           <div v-if="addLocationButtonDiv">
-            <button v-on:click="addNewLocation" type="submit" class="btn btn-success">Lisa maakond</button>
+            <button v-on:click="addNewLocation() " type="submit" class="btn btn-success">Lisa maakond</button>
           </div>
 
           <br>
@@ -58,21 +55,33 @@
         </div>
 
         <div v-if="newFieldTableDiv">
-          <div class="form-row align-items-centre">
-            <div class="col-3 my-1 mx-auto">
-              <label class="mr-sm-2 sr-only">Preference</label>
-              <select v-model="selectedLocationId" v-on:change="getNewFieldLocation" class="custom-select mr-sm-2">
-                <option value="0" disabled selected>Vali asukoht</option>
-                <option v-for="location in allLocations" :value="location.id">{{ location.county }}</option>
-              </select>
+          <div>
+            <table class="table table-hover table-bordered table-striped">
+
+              <thead>
+              <tr class="table-hover table-success">
+                <th scope="col">locationId</th>
+                <th scope="col">Maakond</th>
+                <th scope="col">Spordiklubi lisamine</th>
+              </tr>
+              </thead>
+
+              <tbody>
+              <tr class="table-hover table-primary" v-for="location in allLocations">
+                <td>{{ location.id }}</td>
+                <td>{{ location.county }}</td>
+                <td>
+                  <button type="button" class="btn btn-success" v-on:click="addNewFieldRequest(location.id)">Spordiklubi lisamine</button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            <div v-if="hideNewLocationBar" class="form-group">
+              <input v-model="name" type="text" class="form-control" placeholder="Spordikeskuse nimi">
+              <br>
+              <button v-on:click="addNewField(), hideMessage()" type="submit" class="btn btn-success">Lisa spordiklubi</button>
             </div>
           </div>
-          <br>
-          <input type="text" v-model="name" class="form-control" placeholder="Spordikeskuse nimi">
-          <br>
-          <button v-on:click="addNewField" type="submit" class="btn btn-success">Lisa spordiklubi</button>
-          <br>
-          <br>
         </div>
 
         <div v-if="newSportsTableDiv">
@@ -110,35 +119,6 @@
           <br>
           <br>
         </div>
-        <div v-if="newAvailabilityDiv">
-          <div class="form-row align-items-centre">
-            <div class="col-3 my-1 mx-auto">
-              <label class="mr-sm-2 sr-only">Preference</label>
-              <select v-model="selectedFieldId" v-on:change="getNewFieldId" class="custom-select mr-sm-2">
-                <option value="0" disabled selected>Vali asukoht</option>
-                <option v-for="field in fields" :value="field.id">{{ field.name }}</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-row align-items-centre">
-            <div class="col-3 my-1 mx-auto">
-              <label class="mr-sm-2 sr-only">Preference</label>
-              <input v-model="weekdays" type="date">
-            </div>
-          </div>
-          <div class="form-row align-items-centre">
-            <div class="col-3 my-1 mx-auto">
-              <label class="mr-sm-2 sr-only">Preference</label>
-              <input v-model="startTimeHour" type="text">
-            </div>
-          </div>
-          <br>
-          <input type="text" v-model="name" class="form-control" placeholder="Spordikeskuse nimi">
-          <br>
-          <button v-on:click="addNewField" type="submit" class="btn btn-success">Lisa lahtiolekuaeg</button>
-          <br>
-          <br>
-        </div>
       </div>
       <div>
         <button v-on:click="logOut" class="btn btn-danger" type="submit">Logi välja</button>
@@ -165,7 +145,7 @@ export default {
       hideNewLocationBar: false,
       locationRequestButtonDiv: true,
       addLocationButtonDiv: false,
-      successMessage: '',
+      successMessage: false,
       fields: {},
       locationId: '',
       selectedLocationId: 0,
@@ -218,6 +198,10 @@ export default {
       this.newLocationTableDiv = false
       this.newFieldTableDiv = false
     },
+    hideMessage: function () {
+      this.successMessage = false
+      this.hideNewLocationBar = false
+    },
     addNewLocation: function () {
       this.$http.post("/admin/location", this.locations
       ).then(response => {
@@ -228,6 +212,7 @@ export default {
         this.hideNewLocationBar = false
         this.addLocationButtonDiv = false
         this.getAllLocations()
+        this.successMessage = true
       }).catch(error => {
         console.log(error)
       })
@@ -251,9 +236,6 @@ export default {
       this.addLocationButtonDiv = true
 
     },
-    getNewFieldLocation: function () {
-      this.locationId = this.selectedLocationId
-    },
 
     addNewField: function () {
       let newField = {
@@ -263,10 +245,15 @@ export default {
       }
       this.$http.post("/fields", newField
       ).then(response => {
+        this.successMessage = true
         console.log(response.data)
       }).catch(error => {
         console.log(error)
       })
+    },
+    addNewFieldRequest: function (locationId) {
+      this.hideNewLocationBar = true
+      this.locationId = locationId
     },
     getAllLocations: function () {
       this.$http.get("/admin/all-locations")
