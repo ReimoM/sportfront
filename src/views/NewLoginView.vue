@@ -89,6 +89,7 @@ export default {
 
     displayTableDiv: function () {
       this.tableDivDisplay = true;
+      this.newUserDisplay = false
     },
 
     userLogin: function () {
@@ -115,9 +116,11 @@ export default {
       } else if (this.newUserInfo.password === this.passwordConfirm) {
         this.$http.post("/admin/user", this.newUserInfo
         ).then(response => {
-          sessionStorage.setItem('userId', response.data.userId)
-
-          this.$router.push({name: 'userRoute'})
+          this.newUserInfo = response.data
+          // sessionStorage.setItem('userId', response.data.userId)
+          this.successMessage= 'Kasutaja loodud, jätkamiseks logige sisse'
+          this.displayTableDiv()
+          // this.$router.push({name: 'loginRoute'})
         }).catch(error => {
           this.errorMessage = error.response.data.title + '. ' + error.response.data.detail + '.'
         });
