@@ -82,9 +82,9 @@
           </div>
         </div>
 
-        <div v-if="newSportsTableDiv">
+        <div v-if="newSportsTableDiv" class="login-form">
           <div class="form-group">
-            <input type="text" v-model="sports.sportsType" class="form-control" placeholder="Spordiala">
+            <input v-model="sports.sportsType" type="text"  class="form-control" placeholder="Spordiala">
           </div>
           <br>
           <button v-on:click="addNewSports" type="submit" class="btn btn-success">Lisa spordiala</button>
@@ -98,7 +98,7 @@
               <label class="mr-sm-2 sr-only">Preference</label>
               <select v-model="selectedSportsId" v-on:change="getNewSportsId" class="custom-select mr-sm-2">
                 <option value="0" disabled selected>Vali spordiala</option>
-                <option v-for="sport in sports" :value="sport.id">{{ sport.sportsType }}</option>
+                <option v-for="sport in allSports" :value="sport.id">{{ sport.sportsType }}</option>
               </select>
             </div>
           </div>
@@ -119,7 +119,7 @@
         </div>
       </div>
       <div>
-        <button v-on:click="logOut" class="btn btn-danger" type="submit">Logi välja</button>
+        <button v-on:click="logOut" class="btn btn-outline-danger" type="submit">Logi välja</button>
       </div>
     </div>
   </div>
@@ -150,6 +150,7 @@ export default {
       name: '',
       isActive: true,
       sports: {},
+      allSports: {},
       sportsField: {},
       fieldId: '',
       selectedFieldId: 0,
@@ -319,7 +320,7 @@ export default {
     getAllSports: function () {
       this.$http.get("/admin/all-sports")
           .then(response => {
-            this.sports = response.data
+            this.allSports = response.data
             this.selectedSportsId = this.sportsId
             console.log(response.data)
           }).catch(error => {
