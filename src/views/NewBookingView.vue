@@ -37,7 +37,7 @@
       </div>
     </div>
     <br>
-    <button v-if="getRoleId() === 1" type="submit" class="btn btn-primary" v-on:click="confirmBooking">Broneeri</button>
+    <button :title="getRoleId() ? '' : 'Broneerimiseks logi sisse'" :disabled="getRoleId() !== 1" type="submit" class="btn btn-primary" v-on:click="confirmBooking">Broneeri</button>
 
   </div>
 </template>
