@@ -66,7 +66,11 @@ export default {
       this.$http.get("/fields/all-fields")
           .then(response => {
             this.fields = response.data
-            this.selectedFieldId = this.fieldId
+
+            if (this.fieldId !== null) {
+              this.selectedFieldId = this.fieldId;
+            }
+
             console.log(response.data)
           }).catch(error => {
         console.log(error)

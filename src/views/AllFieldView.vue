@@ -42,6 +42,7 @@ export default {
     getAllSportFields: function () {
       this.$http.get("/fields/all-fields")
           .then(response => {
+            sessionStorage.removeItem('fieldId')
             this.fields = response.data
             console.log(response.data)
           }).catch(error => {

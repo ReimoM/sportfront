@@ -153,9 +153,9 @@ export default {
       sports: {},
       allSports: {},
       sportsField: {},
-      fieldId: '',
+      fieldId: 0,
       selectedFieldId: 0,
-      sportsId: '',
+      sportsId: 0,
       selectedSportsId: 0,
       weekdays: {}
 
@@ -313,7 +313,10 @@ export default {
             }
           }
       ).then(response => {
-        this.sportsId = response.data
+        if (this.sportsId !== null) {
+          this.selectedSportsId = this.sportsId
+        }
+        this.sportsId = response.data;
         console.log(response.data)
       }).catch(error => {
         console.log(error)
@@ -340,7 +343,10 @@ export default {
             }
           }
       ).then(response => {
-        this.fieldId = response.data
+        if (this.fieldId !== null) {
+          this.selectedFieldId = this.fieldId
+        }
+        this.fieldId = response.data;
         console.log(response.data)
       }).catch(error => {
         console.log(error)
