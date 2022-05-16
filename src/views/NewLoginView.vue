@@ -3,7 +3,7 @@
     <h3>Sisselogimiseks täida väljad</h3>
     <br>
 
-    <div v-if="successMessage.length > 0" class="alert alert-primary" role="alert">
+    <div v-if="successMessage.length > 0" class="alert alert-success" role="alert">
       {{ successMessage }}
     </div>
 
@@ -123,10 +123,12 @@ export default {
           this.successMessage= 'Kasutaja ' + '"' + this.newUserInfo.username + '"' +  ' loodud, jätkamiseks logige sisse'
           this.errorMessage = ''
           this.passwordMessage = ''
+          this.messageTitle = ''
           this.displayTableDiv()
         }).catch(error => {
           this.errorMessage = error.response.data.title + '. ' + error.response.data.detail + '.'
           this.passwordMessage = ''
+          this.messageTitle = ''
         });
       } else {
         this.passwordMessage = 'Paroolid ei ühti'

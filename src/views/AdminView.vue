@@ -208,6 +208,7 @@ export default {
         this.addLocationButtonDiv = false
         this.getAllLocations()
         this.successMessage = true
+        this.errorMessage = false
       }).catch(error => {
         console.log(error)
       })
