@@ -192,13 +192,6 @@ export default {
       this.newFieldTableDiv = false
       this.newAvailabilityDiv = false
     },
-    showFieldAvailabilityTable: function () {
-      this.newAvailabilityDiv = true
-      this.newSportToFieldDiv = false
-      this.newSportsTableDiv = false
-      this.newLocationTableDiv = false
-      this.newFieldTableDiv = false
-    },
     hideMessage: function () {
       this.successMessage = false
       this.hideNewLocationBar = false
@@ -237,9 +230,7 @@ export default {
       this.hideNewLocationBar = true
       this.locationRequestButtonDiv = false
       this.addLocationButtonDiv = true
-
     },
-
     addNewField: function () {
       let newField = {
         locationId: this.locationId,
@@ -291,7 +282,6 @@ export default {
       })
     },
     addNewSportToField: function () {
-
       this.$http.post("/fields/new-sportsfield", {}, {
             params: {
               sportsId: this.sportsId.id,
@@ -355,7 +345,6 @@ export default {
       this.fieldId = this.selectedFieldId
       this.getFieldById()
     },
-
   },
   mounted() {
     this.getAllLocations()

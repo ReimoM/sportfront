@@ -35,7 +35,6 @@ export default {
       name: this.name,
       fields: this.fields,
       locationId: this.locationId,
-
     }
   },
   methods : {
@@ -52,8 +51,6 @@ export default {
     navigateToBookings: function (fieldId) {
       sessionStorage.setItem('fieldId', fieldId)
       this.$router.push({name: 'bookingRoute'})
-
-
     }
   },
   mounted() {

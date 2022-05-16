@@ -7,6 +7,10 @@
       {{ successMessage }}
     </div>
 
+    <div v-if="messageTitle.length > 0" class="alert alert-danger" role="alert">
+      {{ messageTitle }}
+    </div>
+
     <div v-if="errorMessage.length > 0" class="alert alert-danger" role="alert">
       {{ errorMessage }}
     </div>
@@ -70,6 +74,7 @@ export default {
     return {
       tableDivDisplay: true,
       newUserDisplay: false,
+      contactFirstName: '',
       newUserInfo: {},
       newLogIn: {},
       messageTitle: '',
@@ -78,7 +83,6 @@ export default {
       errorMessage: '',
       passwordConfirm: null,
       passwordMessage: ''
-
     }
   },
   methods: {
@@ -86,19 +90,15 @@ export default {
       this.tableDivDisplay = false;
       this.newUserDisplay = true
     },
-
     displayTableDiv: function () {
       this.tableDivDisplay = true;
       this.newUserDisplay = false
     },
-
     userLogin: function () {
       this.$http.post("/login", this.newLogIn
       ).then(response => {
-        console.log("START FROM HERE")
         sessionStorage.setItem('userId', response.data.userId)
         sessionStorage.setItem('roleId', response.data.roleId)
-
         if (response.data.roleId === 1) {
           this.$router.push({name: 'userRoute'})
         } else {
@@ -106,26 +106,33 @@ export default {
         }
       }).catch(error => {
         this.errorMessage = error.response.data.title + '. ' + error.response.data.detail + '.'
+        this.successMessage = ''
       })
     },
 
     addNewUser: function () {
       if (this.newUserInfo.contactFirstName.length === 0) {
-        this.messageTitle = "Eesnimi on kohustuslik väli"
-
+        this.messageTitle = 'Eesnimi on kohustuslik väli'
+        this.errorMessage = ''
+        this.passwordMessage = ''
+        this.successMessage = ''
       } else if (this.newUserInfo.password === this.passwordConfirm) {
         this.$http.post("/admin/user", this.newUserInfo
         ).then(response => {
           this.newUserInfo = response.data
-          // sessionStorage.setItem('userId', response.data.userId)
           this.successMessage= 'Kasutaja ' + '"' + this.newUserInfo.username + '"' +  ' loodud, jätkamiseks logige sisse'
+          this.errorMessage = ''
+          this.passwordMessage = ''
           this.displayTableDiv()
-          // this.$router.push({name: 'loginRoute'})
         }).catch(error => {
           this.errorMessage = error.response.data.title + '. ' + error.response.data.detail + '.'
+          this.passwordMessage = ''
         });
       } else {
         this.passwordMessage = 'Paroolid ei ühti'
+        this.successMessage = ''
+        this.messageTitle = ''
+        this.errorMessage = ''
       }
     },
   },

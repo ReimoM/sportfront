@@ -26,7 +26,6 @@
             <th scope="col">Broneeringu eemaldamine</th>
           </tr>
           </thead>
-
           <tbody>
           <tr class="table-hover table-primary" v-for="booking in bookings">
             <td>{{booking.sportsFieldName}}</td>
@@ -43,35 +42,28 @@
 
       <div v-if="contactDisplay">
         <table class="table table-hover table-bordered table-striped">
-
           <thead>
           <tr class="table-hover table-success">
             <th scope="col">Eesnimi</th>
             <th scope="col">Perekonna nimi</th>
             <th scope="col">Telefon</th>
             <th scope="col">Email</th>
-
           </tr>
           </thead>
-
           <tbody>
           <tr class="table-hover table-primary">
             <td>{{contacts.firstName}}</td>
             <td>{{contacts.lastName}}</td>
             <td>{{contacts.telephone}}</td>
             <td>{{contacts.email}}</td>
-
           </tr>
           </tbody>
-
         </table>
         <br>
 
         <div v-if="buttonDisplay">
           <button type="submit" v-on:click="hideAllTables(), showSubmissionForm(), hideButton()" class="btn btn-outline-primary m-3">Muuda andmeid</button>
         </div>
-
-
 
         <div class="col-md-3 col-sm-12 mx-auto" v-if="formDisplay">
 
@@ -87,8 +79,6 @@
           <div class="form-group">
             <input type="text" v-model="newUserInfo.email" class="form-control" placeholder="E-mail">
           </div>
-
-
           <br>
           <button v-on:click="updateUser(); hideSubmissionForm()" type="submit" class="btn btn-success">Uuenda andmed</button>
         </div>
@@ -116,9 +106,7 @@ export default {
       buttonDisplay: true,
       successMessage: false,
       deleteMessage: false,
-
     }
-
   },
   methods: {
     userData: function () {
@@ -138,8 +126,6 @@ export default {
       this.successMessage = false
       this.deleteMessage = false
     },
-
-
     getMyBookings: function () {
       this.$http.get("/field-booking/id", {
         params: {
@@ -153,7 +139,6 @@ export default {
         console.log(error)
       })
     },
-
     updateUser: function () {
       this.$http.put("/id", this.newUserInfo, {
         params: {
@@ -182,54 +167,41 @@ export default {
         console.log(error)
       })
     },
-
     hideTableDiv: function () {
       this.tableDivDisplay = true
       this.contactDisplay = false
 
     },
-
     displayTableDiv: function () {
       this.tableDivDisplay = false
       this.contactDisplay = true
-
     },
-
     hideAllTables: function () {
       this.tableDivDisplay = false
       this.contactDisplay = false
-
     },
-
     hideSubmissionForm: function () {
       this.formDisplay = false
       this.buttonDisplay = false
       this.contactDisplay = false
     },
-
     showSubmissionForm: function () {
       this.formDisplay = true
       this.buttonDisplay = true
       this.contactDisplay = true
     },
-
     hideButton: function () {
       this.buttonDisplay = false
     },
-
     showButton: function () {
       this.buttonDisplay = true
     },
-
   },
-
   mounted() {
     this.getMyBookings()
     this.userData()
   }
-
 }
-
 
 </script>
 

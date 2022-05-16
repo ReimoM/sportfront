@@ -59,7 +59,6 @@ export default {
       bookedFields: {},
       timeSlot: {},
     }
-
   },
   methods: {
     getAllFields: function () {
@@ -110,7 +109,6 @@ export default {
         sportsFieldId: this.selectedSportsFieldId,
         date: this.date,
         timeSlots: this.availableTimes
-
       }
       await this.$http.post("/field-booking/new", bookingConfirmation
       ).then(response => {
@@ -124,12 +122,10 @@ export default {
     getRoleId: function () {
       return Number(sessionStorage.getItem('roleId'))
     },
-
   },
   mounted() {
     this.getAllFields();
     this.getSportfields();
-
   }
 }
 </script>
