@@ -92,15 +92,7 @@
           <br>
           <button v-on:click="updateUser(); hideSubmissionForm()" type="submit" class="btn btn-success">Uuenda andmed</button>
         </div>
-
-
       </div>
-
-    <br>
-      <div>
-    <button type="submit" v-on:click="logOut" class="btn btn-outline-danger m-3">Logi välja</button>
-
-    </div>
     </div>
   </div>
 
@@ -129,10 +121,6 @@ export default {
 
   },
   methods: {
-    logOut: function () {
-      sessionStorage.clear()
-      this.$router.push({name: 'homeRoute'})
-    },
     userData: function () {
       this.$http.get("/id", {
             params: {

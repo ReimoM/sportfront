@@ -4,6 +4,9 @@
     <div v-if="successMessage === true"class="alert alert-success" role="alert">
       {{'Andmed uuendatud'}}
     </div>
+    <div v-if="errorMessage === true"class="alert alert-danger" role="alert">
+      {{'Eemaldamine ebaõnnestus'}}
+    </div>
 
     <div class="col-md-6 col-sm-12 mx-auto">
       <div v-if="adminButtons" class="login-form">
@@ -119,9 +122,6 @@
           <br>
         </div>
       </div>
-      <div>
-        <button v-on:click="logOut" class="btn btn-outline-danger" type="submit">Logi välja</button>
-      </div>
     </div>
   </div>
 </template>
@@ -157,7 +157,8 @@ export default {
       selectedFieldId: 0,
       sportsId: 0,
       selectedSportsId: 0,
-      weekdays: {}
+      weekdays: {},
+      errorMessage: false
 
     }
   },
@@ -201,6 +202,7 @@ export default {
     hideMessage: function () {
       this.successMessage = false
       this.hideNewLocationBar = false
+      this.errorMessage = false
     },
     addNewLocation: function () {
       this.$http.post("/admin/location", this.locations
@@ -227,6 +229,7 @@ export default {
         this.deleteMessage = true
         console.log(response.data)
       }).catch(error => {
+        this.errorMessage = true
         console.log(error)
       })
     },
@@ -265,10 +268,6 @@ export default {
           }).catch(error => {
         console.log(error)
       })
-    },
-    logOut: function () {
-      sessionStorage.clear()
-      this.$router.push({name: 'homeRoute'})
     },
     addNewSports: function () {
       this.$http.post("/admin/sports", this.sports

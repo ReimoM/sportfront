@@ -8,6 +8,7 @@
       <button v-if="getUserId() === 0" :title="getUserId() ? 'Olete sisseloginud' : 'Logi sisse'" @click="$router.push({name: 'loginRoute'})" class="btn btn-outline-primary">Sisselogimine</button>
       <button v-if="getRoleId() === 1"   @click="$router.push('user')" class="btn btn-outline-primary">Kasutaja</button>
       <button v-if="getRoleId() === 2"  @click="$router.push('admin')" class="btn btn-outline-primary">Admin</button>
+      <button v-if="getUserId() !== 0"  @click="logOut" class="btn btn-outline-danger">Logi välja</button>
     </nav>
     <router-view/>
   </div>
@@ -21,6 +22,10 @@ export default {
     getRoleId: function () {
       return Number(sessionStorage.getItem('roleId'))
     },
+    logOut: function () {
+      sessionStorage.clear()
+      this.$router.push({name: 'homeRoute'})
+    }
   }
 }
 
